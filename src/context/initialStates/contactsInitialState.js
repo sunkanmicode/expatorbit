@@ -1,6 +1,6 @@
 export default {
-  getContacts: {
-    data: {},
+  getGroups: {
+    data: [],
     error: null,
     loading: false,
   },
