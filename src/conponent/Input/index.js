@@ -30,7 +30,7 @@ const Input = ({style, onChangeText, label, icon, value, iconPositon, error, ...
 
   return (
     <View style={styles.inputContainer}>
-      {label && <Text>{label}</Text>}
+      {label && <Text style={{color:'#333'}}>{label}</Text>}
       <View
         style={[
           styles.wrapper,
@@ -51,7 +51,7 @@ const Input = ({style, onChangeText, label, icon, value, iconPositon, error, ...
           {...props}
         />
       </View>
-      {error && <Text style={styles.error}>{error}</Text>}
+      {/* {error && <Text style={styles.error}>{error}</Text>} */}
     </View>
   );
 };

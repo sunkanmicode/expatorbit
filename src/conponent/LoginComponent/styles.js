@@ -16,6 +16,7 @@ export default StyleSheet.create({
     fontWeight: '700',
     color: '#231f20',
     fontFamily: 'Poppins',
+    // color:colors.grey
     // opacity: 0.5,
   },
   signBox: {
@@ -44,12 +45,23 @@ export default StyleSheet.create({
     paddingLeft: 5,
     color: colors.black,
     fontSize: 10,
+    fontWeight: '600',
   },
   infoText: {
     fontSize: 10,
+    color: '#333',
   },
   infoText2: {
     fontSize: 10,
     paddingLeft: 4,
+    color: '#333',
+  },
+  error: {
+    width: '100%',
+    height: 50,
+    backgroundColor: 'red',
+    // color:'#333',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
