@@ -60,8 +60,8 @@ export default ({password, username}) =>
     axiosInstance
       .post(`/wp-json/jwt-auth/v1/token`, payload)
       .then(res => {
-        // AsyncStorage.setItem('token', res.data.token);
-        // AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+        AsyncStorage.setItem('token', res.data.token);
+        AsyncStorage.setItem('user', JSON.stringify(res.data.user));
         dispatch({
           type: LOGIN_SUCCESS,
           payload: res.data,

@@ -80,6 +80,16 @@ const Register = () => {
     }
   };
 
+  const options = [
+    {label: 'JavaScript', value: 'JavaScript'},
+    {label: 'TypeScript', value: 'TypeScript'},
+    {label: 'Python', value: 'Python'},
+    {label: 'Java', value: 'Java'},
+    {label: 'C++', value: 'C++'},
+    {label: 'C', value: 'C'},
+  ];
+  
+
   return (
     <RegisterComponent
       form={form}
@@ -89,6 +99,8 @@ const Register = () => {
       datePickerOpen={datePickerOpen}
       setDatePickerOpen={setDatePickerOpen}
       date={date}
+      options={options}
+     
     />
   );
 };

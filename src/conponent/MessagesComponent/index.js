@@ -86,7 +86,7 @@ const MessagesComponent = ({isLoading, getMessages}) => {
                 key={k.id}
                 style={styles.messContainer}
                 onPress={() => {
-                  navigate(Chat, {id:k?.id});
+                  navigate(Chat);
                 }}>
                 <View style={styles.groupsGridBox}>
                   <Image

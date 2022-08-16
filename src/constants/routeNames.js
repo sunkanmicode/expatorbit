@@ -1,4 +1,5 @@
 export const PROFILE = "profile";
+export const PROFILESTACK = 'profileStack';
 export const GROUPS  = "Groups";
 export const MEMBERS = "MEMBERS";
 export const MESSAGES = "Messages";

@@ -59,7 +59,6 @@ const CustomDatePicker = ({
             },
           ]}>
           <Text style={{color: '#333', margin: 10}}>
-            {/* {moment(date).format('YYYY/MM/DD')} */}
             {moment(date).format('MMM Do YYYY')}
           </Text>
           <View>{icon && icon}</View>

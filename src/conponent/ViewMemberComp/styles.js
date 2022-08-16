@@ -4,7 +4,7 @@ import colors from '../../assets/themes/colors';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     // paddingHorizontal: 20,
   },
   profileContainer: {
@@ -243,4 +243,29 @@ export default StyleSheet.create({
     marginVertical: 10,
     backgroundColor: colors.grey,
   },
+
+  // categoryList
+  categoryContainer: {
+    // width: 250,
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  categoryTest: {
+    fontSize: 10,
+    color: colors.white,
+    fontWeight: 'bold',
+    backgroundColor:colors.grey,
+    margin: 5,
+    padding: 7,
+    borderRadius: 5,
+
+  },
+  categoryTestSelected:{
+    backgroundColor: colors.expat,
+
+  }
 });
