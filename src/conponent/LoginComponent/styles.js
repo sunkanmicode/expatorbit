@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import colors from '../../assets/themes/colors';
 
 export default StyleSheet.create({
+ 
   logoImage: {
     height: 70,
     width: 70,

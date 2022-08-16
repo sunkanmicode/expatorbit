@@ -104,4 +104,19 @@ export default StyleSheet.create({
     paddingLeft: 10,
     color: '#333',
   },
+  iconImg: {
+    width: 30,
+    height: 30,
+    backgroundColor: colors.expat,
+    borderRadius: 100,
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 180,
+  },
+  BottomSheet: {
+    flex: 1,
+    paddingHorizontal: 20,
+    backgroundColor: '#FFF',
+  },
 });

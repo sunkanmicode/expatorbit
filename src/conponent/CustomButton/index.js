@@ -6,6 +6,7 @@ import styles from './styles';
 const CustomButton = ({
  secondary,
  primary,
+ expat,
  title,
  loading,
  disabled,
@@ -21,6 +22,9 @@ const CustomButton = ({
     }
       if (primary) {
         return colors.primary;
+      }
+      if (expat) {
+        return colors.expat;
       }
         if (danger) {
         return colors.danger;

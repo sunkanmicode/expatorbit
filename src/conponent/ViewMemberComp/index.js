@@ -1,7 +1,5 @@
-
-
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -16,20 +14,79 @@ import {
 } from 'react-native';
 import Container from '../../conponent/Container';
 import Icon from '../CustomIcon';
-
-
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import styles from './styles';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../assets/themes/colors';
 import ProfileEdit from '../../screens/ProfileEdit';
 import ViewMemberProfile from '../../screens/ViewMemberProfile';
+import ViewProfileList from '../bottomSheetContainer/ViewProfileList';
+import CustomModel from '../CustomModel';
 // import {useRoute} from '@react-navigation/native';
 
+const ViewMemberComp = ({
+  getUser_Id,
+  loading,
+  getProfile,
+  profile,
+  
+}) => {
+  const {navigate} = useNavigation();
+  const [categoriesIndex, setCategoriesIndex] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+  const [modelVisible, setModelVisible] = useState(false);
+  const [modelVisible2, setModelVisible2] = useState(false);
 
-const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
-    const {navigate} = useNavigation();
+  // ref
+  const bottomSheetRef = useRef(null);
 
+  // variables
+  const snapPoints = ['20%'];
+
+  // callbacks
+  const handleSheetChanges = useCallback(index => {
+    bottomSheetRef.current?.snapToIndex(index);
+    setIsOpen(true);
+    // console.log("handleSheetChanges", index);
+  }, []);
+
+  const categories = [
+    {name: 'Connect', onPress: () => {}},
+    {name: 'Follow', onPress: () => {}},
+    {name: 'Message', onPress: () => {}},
+    {
+      name: (
+        <Icon type="Feather" name="more-horizontal" color="#333" size={15} />
+      ),
+      onPress: () => {
+        handleSheetChanges(0);
+      },
+    },
+  ];
+
+  const CategoryList = () => {
+    return (
+      <View style={styles.categoryContainer}>
+        {categories.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => {
+              item.onPress(), setCategoriesIndex(index);
+            }}>
+            <Text
+              style={[
+                styles.categoryTest,
+                categoriesIndex === index && styles.categoryTestSelected,
+              ]}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  };
 
   const timeline = [
     {
@@ -75,7 +132,39 @@ const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
 
   return (
     <>
-      <ScrollView style={styles.container}>
+      <CustomModel
+        modelVisible={modelVisible}
+        setModelVisible={setModelVisible}
+        // modelBody={
+        //   <View>
+        //     <Text>
+        //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+        //     </Text>
+        //   </View>
+        // }
+        // modelFooter={<></>}
+        title="Connection removed"
+        // title2='Has been update'
+      />
+      <CustomModel
+        modelVisible={modelVisible}
+        setModelVisible={setModelVisible}
+        // modelBody={
+        //   <View>
+        //     <Text>
+        //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+        //     </Text>
+        //   </View>
+        // }
+        // modelFooter={<></>}
+        title="Member blocked"
+        title2="Go to settings to unblock"
+      />
+      <ScrollView
+        style={[
+          styles.container,
+          {backgroundColor: isOpen ? '#333' : colors.white},
+        ]}>
         <View style={styles.profileContainer}>
           <View style={styles.profileHeader}>
             <Icon
@@ -123,15 +212,8 @@ const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.editBtn}
-            onPress={() => {
-              navigate(ProfileEdit);
-            }}>
-            <Text style={{color: '#3376B9', alignSelf: 'center'}}>
-              Edit Profile
-            </Text>
-          </TouchableOpacity>
+
+          <CategoryList />
         </View>
         <View style={{marginVertical: 10}} />
         <View style={{paddingHorizontal: 20}}>
@@ -323,12 +405,24 @@ const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
           )}
         />
       </ScrollView>
+      {isOpen && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={snapPoints}
+          enablePanDownToClose={true}
+          onClose={() => setIsOpen(false)}>
+          <BottomSheetView>
+            <ViewProfileList
+              setModelVisible={setModelVisible}
+            />
+          </BottomSheetView>
+        </BottomSheet>
+      )}
     </>
   );
 };
 
-export default ProfileComponent;
- 
+export default ViewMemberComp;
 
 //  {/* <Image
 //             resizeMode="stretch"

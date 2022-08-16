@@ -8,6 +8,8 @@ import getProfileDatails from '../../context/actions/expatsActions/getProfileDat
 import { GlobalContext } from '../../context/Provider';
 
 const Profile = () => {
+
+
   const {params: {item = {}} = {}} = useRoute()
   console.log(item, 'params');
   const {
@@ -26,15 +28,17 @@ const Profile = () => {
     getProfileDatails(getUser_Id)(expatsDispatch);
   }, [getUser_Id]);
 
+
+  
+
   return (
-    <Container>
-      <ProfileComponent
-        getUser_Id={getUser_Id}
-        loading={loading}
-        getProfile={data}
-        profile={item}
-      />
-    </Container>
+    <ProfileComponent
+      getUser_Id={getUser_Id}
+      loading={loading}
+      getProfile={data}
+      profile={item}
+    
+    />
   );
 }
 

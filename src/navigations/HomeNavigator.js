@@ -3,7 +3,7 @@ import * as React from 'react';
 import {Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {  MEMBERS, SETTINGS, PROFILE, GROUPS, MESSAGES } from '../constants/routeNames';
+import {  MEMBERS, SETTINGS, PROFILE, GROUPS, MESSAGES, PROFILESTACK } from '../constants/routeNames';
 import Profile from '../screens/Profile';
 // import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 // import Icon from 'react-native-vector-icons/FontAwesome';
@@ -13,6 +13,8 @@ import Groups from '../screens/Groups';
 import Members from '../screens/Members';
 import Messages from '../screens/Messages';
 import Chat from '../screens/Chat';
+import ProfileEdit from '../screens/ProfileEdit';
+import ViewMemberProfile from '../screens/ViewMemberProfile';
 
 
 
@@ -35,16 +37,21 @@ const MessageStack = ({navigation}) => (
   </HomeStack.Navigator>
 );
 
-const MembersStack = ({navigation}) => (
+const ProfileStack = ({navigation}) => (
   <HomeStack.Navigator>
     <HomeStack.Screen
-      name="members"
-      component={Members}
+      name="Profile"
+      component={Profile}
       options={{headerShown: false}}
     />
     <HomeStack.Screen
-      name="profile"
-      component={Profile}
+      name="ProfileEdit"
+      component={ProfileEdit}
+      options={{headerShown: false}}
+    />
+    <HomeStack.Screen
+      name="ViewMemberProfile"
+      component={ViewMemberProfile}
       options={{headerShown: false}}
     />
   </HomeStack.Navigator>
@@ -52,7 +59,6 @@ const MembersStack = ({navigation}) => (
 
 
 const HomeNavigator = () => {
-
   return (
     <Tab.Navigator
       initialRouteName="PROFILE"
@@ -93,9 +99,9 @@ const HomeNavigator = () => {
           );
         },
       })}>
-      {/* <Tab.Screen name={PROFILE} component={Profile} /> */}
+      <Tab.Screen name={PROFILE} component={ProfileStack} />
       <Tab.Screen name={GROUPS} component={Groups} />
-      <Tab.Screen name={MEMBERS} component={MembersStack} />
+      {/* <Tab.Screen name={MEMBERS} component={MembersStack} /> */}
       <Tab.Screen name={MESSAGES} component={MessageStack} />
     </Tab.Navigator>
   );

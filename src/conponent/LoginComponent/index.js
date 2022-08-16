@@ -26,7 +26,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
    
 
   return (
-    <Container>
+    <View>
       {/* <Image
         source={require('../../assets/images/logo.png')}
         style={styles.logoImage}
@@ -98,7 +98,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
           </TouchableOpacity>
 
           <CustomButton
-            primary
+            expat
             loading={loading}
             disabled={loading}
             // onPress={submitData}
@@ -133,7 +133,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
           </View>
         </View>
       </View>
-    </Container>
+    </View>
   );
 };
 
