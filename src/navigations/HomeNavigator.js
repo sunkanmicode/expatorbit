@@ -49,6 +49,17 @@ const ProfileStack = ({navigation}) => (
       component={ProfileEdit}
       options={{headerShown: false}}
     />
+    
+  </HomeStack.Navigator>
+);
+
+const MembersStack = ({navigation}) => (
+  <HomeStack.Navigator>
+    <HomeStack.Screen
+      name="member"
+      component={Members}
+      options={{headerShown: false}}
+    />
     <HomeStack.Screen
       name="ViewMemberProfile"
       component={ViewMemberProfile}
@@ -73,11 +84,11 @@ const HomeNavigator = () => {
             size = focused ? 20 : 18;
             color = focused ? colors.primary : colors.grey;
           } else if (route.name === 'Groups') {
-            iconName = 'users';
+            iconName = 'users-cog';
             color = focused ? colors.primary : colors.grey;
             size = focused ? 20 : 18;
           } else if (route.name === 'MEMBERS') {
-            iconName = 'user';
+            iconName = 'users';
             color = focused ? colors.primary : colors.grey;
             size = focused ? 20 : 18;
           } else if (route.name === 'Messages') {
@@ -91,7 +102,7 @@ const HomeNavigator = () => {
           }
           return (
             <Icon
-              type="FontAwesome"
+              type="FontAwesome5"
               name={iconName}
               size={size}
               color={color}
@@ -101,7 +112,7 @@ const HomeNavigator = () => {
       })}>
       <Tab.Screen name={PROFILE} component={ProfileStack} />
       <Tab.Screen name={GROUPS} component={Groups} />
-      {/* <Tab.Screen name={MEMBERS} component={MembersStack} /> */}
+      <Tab.Screen name={MEMBERS} component={MembersStack} />
       <Tab.Screen name={MESSAGES} component={MessageStack} />
     </Tab.Navigator>
   );

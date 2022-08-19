@@ -3,29 +3,25 @@ import { Text } from 'react-native'
 import MembersComponent from '../../conponent/MembersComponent'
 import { GlobalContext } from '../../context/Provider';
 import getAllMembers from '../../context/actions/expatsActions/getAllMembers';
+import { useRoute } from '@react-navigation/native';
 
 const Members = () => {
+  // const {params: {item = {}} = {}} = useRoute()
+  // console.log(item, 'params');
   const {
     expatsDispatch,
     expatsState: {
-      getMembers:{data, loading}
+      getMembers: {data, loading},
     },
   } = useContext(GlobalContext);
 
   //  console.log({data, loading}, 'member500');
 
-   useEffect(()=>{
+  useEffect(() => {
     getAllMembers()(expatsDispatch);
-   },[])
+  }, []);
 
-
-  return (
-    <MembersComponent  
-      getMembers={data}
-      isLoading={loading}
-    
-    />
-  )
+  return <MembersComponent getMembers={data} isLoading={loading} />;
 }
 
 export default Members

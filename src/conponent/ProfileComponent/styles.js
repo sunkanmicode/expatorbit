@@ -7,12 +7,26 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     // paddingHorizontal: 20,
   },
+  // profileContainer: {
+  //   shadowColor: '#000',
+  //   // shadowOffset: {
+  //   //   width: 0,
+  //   //   height: 1,
+  //   // },
+  //   // shadowOpacity: 0.22,
+  //   // shadowRadius: 2.22,
+
+  //   elevation: 3,
+
+  // },
+
   profileContainer: {
     height: '27%',
     width: '100%',
-    backgroundColor: '#f1f2f2',
+    // backgroundColor: '#f1f2f2',
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    elevation: 0.5,
   },
   profileHeader: {
     flexDirection: 'row',

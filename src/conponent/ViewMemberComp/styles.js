@@ -4,15 +4,14 @@ import colors from '../../assets/themes/colors';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'white',
-    // paddingHorizontal: 20,
   },
   profileContainer: {
     height: '27%',
     width: '100%',
-    backgroundColor: '#f1f2f2',
+    // backgroundColor: '#f1f2f2',
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    elevation: 0.5,
   },
   profileHeader: {
     flexDirection: 'row',
@@ -255,17 +254,28 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   categoryTest: {
+    // width: 80,
+    letterSpacing: 2,
     fontSize: 10,
-    color: colors.white,
+    color: colors.grey,
     fontWeight: 'bold',
-    backgroundColor:colors.grey,
+    backgroundColor: colors.white,
     margin: 5,
     padding: 7,
     borderRadius: 5,
+    elevation: 5,
 
+    // fontSize: 10,
+    // color: colors.white,
+    // fontWeight: 'bold',
+    // // backgroundColor: colors.grey,
+    // margin: 5,
+    // padding: 7,
+    // borderRadius: 5,
+    // elevation: 5,
   },
-  categoryTestSelected:{
+  categoryTestSelected: {
     backgroundColor: colors.expat,
-
-  }
+    color: colors.white,
+  },
 });
