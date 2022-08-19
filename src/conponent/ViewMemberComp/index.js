@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -12,7 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Container from '../../conponent/Container';
 import Icon from '../CustomIcon';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
@@ -26,13 +25,9 @@ import ViewProfileList from '../bottomSheetContainer/ViewProfileList';
 import CustomModel from '../CustomModel';
 // import {useRoute} from '@react-navigation/native';
 
-const ViewMemberComp = ({
-  getUser_Id,
-  loading,
-  getProfile,
-  profile,
-  
-}) => {
+const ViewMemberComp = ({getUser_Id, loading, getProfile, profile}) => {
+  const {params: {item = {}} = {}} = useRoute()
+  console.log(item, 'params');
   const {navigate} = useNavigation();
   const [categoriesIndex, setCategoriesIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -412,9 +407,7 @@ const ViewMemberComp = ({
           enablePanDownToClose={true}
           onClose={() => setIsOpen(false)}>
           <BottomSheetView>
-            <ViewProfileList
-              setModelVisible={setModelVisible}
-            />
+            <ViewProfileList setModelVisible={setModelVisible} />
           </BottomSheetView>
         </BottomSheet>
       )}

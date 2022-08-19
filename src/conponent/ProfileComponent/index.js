@@ -124,10 +124,7 @@ const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
             </TouchableOpacity>
           </View>
           <TouchableOpacity
-            style={styles.editBtn}
-            onPress={() => {
-              navigate(ProfileEdit);
-            }}>
+            style={styles.editBtn}>
             <Text style={{color: '#3376B9', alignSelf: 'center'}}>
               Edit Profile
             </Text>

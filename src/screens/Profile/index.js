@@ -10,8 +10,8 @@ import { GlobalContext } from '../../context/Provider';
 const Profile = () => {
 
 
-  const {params: {item = {}} = {}} = useRoute()
-  console.log(item, 'params');
+  // const {params: {item = {}} = {}} = useRoute()
+  // console.log(item, 'params');
   const {
     expatsDispatch,
     expatsState: {getUser_Id, 
@@ -36,7 +36,7 @@ const Profile = () => {
       getUser_Id={getUser_Id}
       loading={loading}
       getProfile={data}
-      profile={item}
+      // profile={item}
     
     />
   );

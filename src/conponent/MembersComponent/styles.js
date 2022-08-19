@@ -2,6 +2,69 @@ import {StyleSheet} from 'react-native';
 import colors from '../../assets/themes/colors';
 
 export default StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: colors.white,
+    padding: 20,
+  },
+  headerWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  //category
+  categoryContainer: {
+    // width: 250,
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  categoryTest: {
+    fontSize: 10,
+    color: colors.black,
+    fontWeight: 'bold',
+    backgroundColor: colors.white,
+    margin: 5,
+    padding: 7,
+    borderRadius: 5,
+    elevation: 5,
+  },
+  categoryTestSelected: {
+    backgroundColor: colors.expat,
+  },
+  //member list
+  profileImg:{
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+  },
+  listCoontainer:{
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent:'space-between',
+    marginVertical: 15,
+  },
+  listTitle:{
+    flexDirection:'row',
+    alignItems:'center',
+    width: 300,
+  },
+  iconWrapper:{
+    width: 30,
+    height: 30,
+    padding: 7,
+    borderRadius: 100,
+    backgroundColor:colors.expat,
+  },
+
+  //old styles
   logoImage: {
     height: 200,
     width: '100%',
@@ -32,7 +95,7 @@ export default StyleSheet.create({
     padding: 5,
     borderRadius: 5,
   },
-  groupsText:{
+  groupsText: {
     color: colors.grey,
   },
   logoImage2: {
@@ -40,14 +103,13 @@ export default StyleSheet.create({
     height: 100,
     borderRadius: 20,
 
-
     // borderColor: colors.gray,
   },
-//   groupsgrid: {
-//     flexDirection: 'row',
-//     justifyContent: 'center',
-//     // alignItems: 'center',
-//   },
+  //   groupsgrid: {
+  //     flexDirection: 'row',
+  //     justifyContent: 'center',
+  //     // alignItems: 'center',
+  //   },
   subGroupTextTile: {
     fontSize: 15,
     color: colors.primary,
@@ -55,7 +117,7 @@ export default StyleSheet.create({
   },
   groupsGridBox: {
     margin: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
     // justifyContent: 'center',
     alignItems: 'center',
   },
@@ -66,19 +128,18 @@ export default StyleSheet.create({
   subGroupText: {
     fontSize: 10,
     margin: 3,
-    color: colors.grey
+    color: colors.grey,
   },
-  btn2:{
+  btn2: {
     width: 70,
     // padding: 5,
     // height: 40,
     backgroundColor: colors.accent,
     borderRadius: 50,
   },
-  btn2Text:{
-    textAlign:'center',
+  btn2Text: {
+    textAlign: 'center',
     color: colors.white,
     fontSize: 10,
-
-  }
+  },
 });
