@@ -1,7 +1,7 @@
 import {
-  GET_PROFILE_FAIL,
-  GET_PROFILE_LOADING,
-  GET_PROFILE_SUCCESS,
+  GET_TIMELINE_LOADING,
+  GET_TIMELINE_FAIL,
+  GET_TIMELINE_SUCCESS,
 } from '../../../constants/actionTypes';
 import axiosInstance from '../../../helpers/axiosInstance';
 import postData, {getData} from '../../../utils/api';
@@ -10,25 +10,25 @@ const ROOT_URL = 'https://expatorbit.in/';
 
 export default (id) => dispatch => {
   dispatch({
-    type: GET_PROFILE_LOADING,
+    type: GET_TIMELINE_LOADING,
   });
-  axiosInstance.get(`${ROOT_URL}wp-json/buddyboss/v1/members/${id}`)
+  axiosInstance(
+    `${ROOT_URL}/wp-json/buddyboss/v1/activity`,
+  )
     .then(res => {
       dispatch({
-        type: GET_PROFILE_SUCCESS,
+        type: GET_TIMELINE_SUCCESS,
         payload: res.data,
       });
-
-      console.log(data, 'PROFILE');
+      // console.log(res.data, 'TIMELINE');
     })
     .catch(err => {
       dispatch({
-        type: GET_PROFILE_FAIL,
+        type: GET_TIMELINE_FAIL,
         payload: err.response
           ? err.response.data
           : {error: 'something went wrong'},
       });
+      // console.log(error, 'something went wrong');
     });
 };
-
-

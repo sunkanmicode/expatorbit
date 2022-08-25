@@ -18,6 +18,10 @@ import {
   GET_MESSAGES_SUCCESS,
   GET_MESSAGES_FAIL,
   GET_MESSAGES_LOADING,
+  //get Timeline
+  GET_TIMELINE_LOADING,
+  GET_TIMELINE_FAIL,
+  GET_TIMELINE_SUCCESS
 } from '../../constants/actionTypes';
 
 const expatsReducer = (state, {type, payload}) => {
@@ -26,6 +30,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getGroups: {
+          ...state.getGroups,
           loading: true,
           error: null,
         },
@@ -34,6 +39,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getGroups: {
+          ...state.getGroups,
           loading: false,
           data: payload,
           error: null,
@@ -43,6 +49,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getGroups: {
+          ...state.getGroups,
           loading: false,
           error: payload,
         },
@@ -71,6 +78,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getProfile: {
+          ...state.getProfile,
           loading: false,
           data: payload,
         },
@@ -79,6 +87,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getProfile: {
+          ...state.getProfile,
           loading: true,
           error: null,
         },
@@ -87,6 +96,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getProfile: {
+          ...state.getProfile,
           loading: false,
           error: payload,
         },
@@ -96,6 +106,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getMembers: {
+          ...state.getMembers,
           loading: true,
           error: null,
         },
@@ -104,6 +115,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getMembers: {
+          ...state.getMembers,
           loading: false,
           data: payload,
           error: null,
@@ -113,6 +125,7 @@ const expatsReducer = (state, {type, payload}) => {
       return {
         ...state,
         getMembers: {
+          ...state.getMembers,
           loading: false,
           error: payload,
         },
@@ -142,6 +155,35 @@ const expatsReducer = (state, {type, payload}) => {
         ...state,
         getMessages: {
           ...state.getMessages,
+          loading: false,
+          error: payload,
+        },
+      };
+    //get Timeline
+    case GET_TIMELINE_LOADING:
+      return {
+        ...state,
+        getTimeline: {
+          ...state.getTimeline,
+          loading: true,
+          error: null,
+        },
+      };
+    case GET_TIMELINE_SUCCESS:
+      return {
+        ...state,
+        getTimeline: {
+          ...state.getTimeline,
+          loading: false,
+          data: payload,
+          error: null,
+        },
+      };
+    case GET_TIMELINE_FAIL:
+      return {
+        ...state,
+        getTimeline: {
+          ...state.getTimeline,
           loading: false,
           error: payload,
         },

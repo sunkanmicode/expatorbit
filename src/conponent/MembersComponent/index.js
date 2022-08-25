@@ -14,10 +14,10 @@ import {
   View,
 } from 'react-native';
 import styles from './styles';
-import { PROFILE } from '../../constants/routeNames';
+import { PROFILE, VIEWMEMBER } from '../../constants/routeNames';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from '../CustomIcon';
-import ViewMemberProfile from '../../screens/ViewMemberProfile';
+import ViewMember from '../../screens/ViewMember';
 
 
 const IMAGEDEFAULT =
@@ -129,18 +129,20 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
         </View>
 
         <View style={{padding: 0}}>
-          {/* <View style={{paddingVertical: 100, paddingHorizontal: 100}}> */}
-          {isLoading && <ActivityIndicator size="large" />}
-          {/* </View> */}
-          {!isLoading &&
-            getMembers.map(item => (
+          {isLoading && (
+            <ActivityIndicator
+              size="large"
+              style={{paddingVertical: 100, paddingHorizontal: 100}}
+            />
+          )}
+          {!isLoading && (
+            getMembers.map((item) => (
               <>
-                <View style={styles.listCoontainer}>
+                <View style={styles.listCoontainer} key={item.id}>
                   <TouchableOpacity
-                    key={item.id}
                     style={styles.listTitle}
                     onPress={() => {
-                      navigate(ViewMemberProfile, {item});
+                      navigate(VIEWMEMBER, {item});
                     }}>
                     <Image
                       source={{uri: item?.avatar_urls?.full || IMAGEDEFAULT}}
@@ -167,7 +169,8 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
                   </TouchableOpacity>
                 </View>
               </>
-            ))}
+            ))
+             )} 
         </View>
       </ScrollView>
       {isOpen && (

@@ -6,8 +6,8 @@ import getAllMembers from '../../context/actions/expatsActions/getAllMembers';
 import { useRoute } from '@react-navigation/native';
 
 const Members = () => {
-  // const {params: {item = {}} = {}} = useRoute()
-  // console.log(item, 'params');
+  const {params} = useRoute()
+  console.log(params, 'params');
   const {
     expatsDispatch,
     expatsState: {
@@ -15,7 +15,7 @@ const Members = () => {
     },
   } = useContext(GlobalContext);
 
-  //  console.log({data, loading}, 'member500');
+   console.log({data, loading}, 'member500');
 
   useEffect(() => {
     getAllMembers()(expatsDispatch);

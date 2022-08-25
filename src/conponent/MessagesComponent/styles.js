@@ -6,6 +6,22 @@ export default StyleSheet.create({
     height: 200,
     width: '100%',
   },
+  wrapper: {
+    flex: 1,
+    backgroundColor: colors.white,
+    paddingHorizontal: 5,
+    paddingVertical: 20,
+  },
+  headerWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   searchWrapper: {
     borderColor: 'red',
   },
@@ -36,8 +52,8 @@ export default StyleSheet.create({
     color: colors.grey,
   },
   logoImage2: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
     borderRadius: 20,
 
     // borderColor: colors.gray,

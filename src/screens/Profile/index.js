@@ -4,6 +4,7 @@ import React, {  useContext, useEffect, useState } from 'react'
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Container from '../../conponent/Container'
 import ProfileComponent from '../../conponent/ProfileComponent';
+import getAllTimeLine from '../../context/actions/expatsActions/getAllTimeLine';
 import getProfileDatails from '../../context/actions/expatsActions/getProfileDatails';
 import { GlobalContext } from '../../context/Provider';
 
@@ -20,16 +21,11 @@ const Profile = () => {
   } = useContext(GlobalContext);
 
   //  console.log({ getUser_Id, loading, data}, 'expatsState234');
-  //  console.log({getUser_Id}, 'getUser_id');
-
-
+  
   useEffect(() => {
     // getProfileDatails(getUser_Id);
     getProfileDatails(getUser_Id)(expatsDispatch);
   }, [getUser_Id]);
-
-
-  
 
   return (
     <ProfileComponent
@@ -37,7 +33,6 @@ const Profile = () => {
       loading={loading}
       getProfile={data}
       // profile={item}
-    
     />
   );
 }

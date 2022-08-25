@@ -16,23 +16,21 @@ import Icon from '../CustomIcon';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import styles from './styles';
-import moment from 'moment';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../assets/themes/colors';
-import ProfileEdit from '../../screens/ProfileEdit';
-import ViewMemberProfile from '../../screens/ViewMember';
 import ViewProfileList from '../bottomSheetContainer/ViewProfileList';
 import CustomModel from '../CustomModel';
+import moment from 'moment';
 // import {useRoute} from '@react-navigation/native';
 
-const ViewMemberComp = () => {
-  const {params: {item = {}} = {}} = useRoute()
-  console.log(item, 'params');
+const ViewMemberComponent = ({viewMember, navigation}) => {
+  // const {params: {item = {}} = {}} = useRoute();
+  // console.log(item, 'params');
   const {navigate} = useNavigation();
   const [categoriesIndex, setCategoriesIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [modelVisible, setModelVisible] = useState(false);
   const [modelVisible2, setModelVisible2] = useState(false);
+  // console.log(viewMember, 'ViewMember');
 
   // ref
   const bottomSheetRef = useRef(null);
@@ -162,31 +160,37 @@ const ViewMemberComp = () => {
         ]}>
         <View style={styles.profileContainer}>
           <View style={styles.profileHeader}>
-            <Icon
-              type="MaterialIcons"
-              // style={styles.playIcon}
-              name="keyboard-arrow-left"
-              size={25}
-              color="#6d6e71"
-            />
+            <TouchableOpacity>
+              <Icon
+                type="MaterialIcons"
+                // style={styles.playIcon}
+                name="keyboard-arrow-left"
+                size={25}
+                color="#6d6e71"
+              />
+            </TouchableOpacity>
             <Text style={{color: '#333'}}>Profile</Text>
             <View />
           </View>
           <View style={{padding: 0}}>
             <Image
-              source={require('../../assets/images/members.png')}
+              source={{uri: viewMember?.avatar_urls?.full}}
               style={styles.profileImg}
             />
             <View style={styles.admin}>
-              <Text style={{color: '#3376B9'}}>ADMIN</Text>
+              <Text style={{color: '#3376B9'}}>
+                {viewMember?.is_wp_admin ? 'ADMIN' : 'MEMBER'}
+              </Text>
             </View>
           </View>
           <View style={styles.headerText}>
             <Text style={{color: '#333', fontSize: 15, letterSpacing: 8}}>
-              PERSON NAME
+              {viewMember?.name}
             </Text>
             <View style={styles.headerText2}>
-              <Text style={{color: '#8f92a1'}}>@hennah</Text>
+              <Text style={{color: '#8f92a1'}}>
+                @{viewMember?.profile_name}
+              </Text>
               <View
                 style={{
                   margin: 5,
@@ -196,12 +200,12 @@ const ViewMemberComp = () => {
                   height: 10,
                 }}
               />
-              <Text style={{color: '#8f92a1'}}>Joined Nov 24th</Text>
+              <Text style={{color: '#8f92a1'}}>
+                Joined{' '}
+                {moment(viewMember?.registered_date).format('MMMM Do YYYY')}
+              </Text>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                navigate(ViewMemberProfile);
-              }}>
+            <TouchableOpacity>
               <Text style={{color: '#8f92a1', textAlign: 'center'}}>
                 About the person...
               </Text>
@@ -222,14 +226,25 @@ const ViewMemberComp = () => {
           <View style={styles.personalInfo}>
             <Icon type="Entypo" name="location" size={15} color="#8f92a1" />
             <Text style={{color: '#8f92a1', marginHorizontal: 10}}>From</Text>
-            <Text style={{color: '#333'}}>Barcelona, spain</Text>
+            <Text style={{color: '#333'}}>
+              {!viewMember?.xprofile?.groups[1]?.fields[36]?.value?.raw
+                ? null
+                : viewMember?.xprofile?.groups[1]?.fields[36]?.value?.raw}
+            </Text>
           </View>
           <View style={styles.personalInfo}>
             <Icon name="birthday-cake" size={15} color="#8f92a1" />
             <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
               Birthday
             </Text>
-            <Text style={{color: '#333'}}>sept 24th, 1998</Text>
+            <Text style={{color: '#333'}}>
+              {!viewMember?.xprofile?.groups[6]?.fields  
+                ? null
+                : viewMember?.xprofile?.groups[6]?.fields[85]?.value?.raw
+                ? moment(
+                    viewMember?.xprofile?.groups[6]?.fields[85]?.value?.raw
+                  ).format('MMMM Do YYYY') : null}
+            </Text>
           </View>
 
           <View style={styles.personalInfo}>
@@ -242,7 +257,13 @@ const ViewMemberComp = () => {
             {/* <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
               Lives in
             </Text> */}
-            <Text style={{color: '#333', marginHorizontal: 10}}>Male</Text>
+            <Text style={{color: '#333', marginHorizontal: 10}}>
+              {!viewMember?.xprofile?.groups[6]?.fields 
+                ? null
+                : viewMember?.xprofile?.groups[6]?.fields[88]?.value?.raw
+                ? 'Male'
+                : null}
+            </Text>
           </View>
           <TouchableOpacity>
             <Text style={{color: '#333'}}> ...see your about me</Text>
@@ -415,7 +436,7 @@ const ViewMemberComp = () => {
   );
 };
 
-export default ViewMemberComp;
+export default ViewMemberComponent;
 
 //  {/* <Image
 //             resizeMode="stretch"

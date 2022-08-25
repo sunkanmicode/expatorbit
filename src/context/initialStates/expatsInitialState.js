@@ -19,7 +19,13 @@ export default {
     error: null,
     loading: false,
   },
+  getTimeline:{
+    data:[],
+    loading: false,
+    error: null
+  },
   getUser_Id: '',
   isLoading: false,
   errors: null,
+  
 };
