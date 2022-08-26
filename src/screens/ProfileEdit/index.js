@@ -1,10 +1,12 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import ProfileEditComp from '../../conponent/ProfileEditComp';
 
 
 const ProfileEdit = () => {
+  const parama =   useRoute();
+  console.log(parama, 'getProfile3000')
   const {navigate} = useNavigation();
   const [isOpen, setIsOpen] = useState(true);
   // // ref
@@ -22,7 +24,6 @@ const ProfileEdit = () => {
   }, []);
   // const handleClosePress = () => bottomSheetRef.current.close();
   // const handleOpenPress = () => bottomSheetRef.current.open();
-
 
   return (
     <ProfileEditComp

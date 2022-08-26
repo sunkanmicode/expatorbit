@@ -23,13 +23,22 @@ import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../assets/themes/colors';
 import ProfileEdit from '../../screens/ProfileEdit';
-import ViewMemberProfile from '../../screens/ViewMemberProfile';
+import ViewMemberProfile from '../../screens/ViewMember';
+import Timeline from '../../screens/Timeline';
+import Members from '../../screens/Members';
+import { MEMBERS } from '../../constants/routeNames';
 // import {useRoute} from '@react-navigation/native';
 
 
-const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
-    const {navigate} = useNavigation();
-
+const ProfileComponent = ({
+  getUser_Id,
+  loading,
+  getProfile,
+  profile,
+ 
+}) => {
+  const {navigate} = useNavigation();
+  // console.log({loading, getProfile}, 'profileComp')
 
   const timeline = [
     {
@@ -51,6 +60,8 @@ const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
       desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam Quibusdam Quibusdam Quibusdam Quibusdam Quibusdam',
     },
   ];
+
+
 
   const data = [
     {
@@ -76,249 +87,299 @@ const ProfileComponent = ({getUser_Id, loading, getProfile, profile}) => {
   return (
     <>
       <ScrollView style={styles.container}>
-        <View style={styles.profileContainer}>
-          <View style={styles.profileHeader}>
-            <Icon
-              type="MaterialIcons"
-              // style={styles.playIcon}
-              name="keyboard-arrow-left"
-              size={25}
-              color="#6d6e71"
-            />
-            <Text style={{color: '#333'}}>Profile</Text>
-            <View />
-          </View>
-          <View style={{padding: 0}}>
-            <Image
-              source={require('../../assets/images/members.png')}
-              style={styles.profileImg}
-            />
-            <View style={styles.admin}>
-              <Text style={{color: '#3376B9'}}>ADMIN</Text>
-            </View>
-          </View>
-          <View style={styles.headerText}>
-            <Text style={{color: '#333', fontSize: 15, letterSpacing: 8}}>
-              PERSON NAME
-            </Text>
-            <View style={styles.headerText2}>
-              <Text style={{color: '#8f92a1'}}>@hennah</Text>
-              <View
-                style={{
-                  margin: 5,
-                  backgroundColor: '#8f92a1',
-                  borderRadius: 100,
-                  width: 10,
-                  height: 10,
-                }}
-              />
-              <Text style={{color: '#8f92a1'}}>Joined Nov 24th</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                navigate(ViewMemberProfile);
-              }}>
-              <Text style={{color: '#8f92a1', textAlign: 'center'}}>
-                About the person...
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            style={styles.editBtn}>
-            <Text style={{color: '#3376B9', alignSelf: 'center'}}>
-              Edit Profile
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{marginVertical: 10}} />
-        <View style={{paddingHorizontal: 20}}>
-          <View style={styles.personalInfo}>
-            <Icon name="home" size={15} color="#8f92a1" />
-            <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
-              Lives in
-            </Text>
-            <Text style={{color: '#333'}}>Norib, India</Text>
-          </View>
-          <View style={styles.personalInfo}>
-            <Icon type="Entypo" name="location" size={15} color="#8f92a1" />
-            <Text style={{color: '#8f92a1', marginHorizontal: 10}}>From</Text>
-            <Text style={{color: '#333'}}>Barcelona, spain</Text>
-          </View>
-          <View style={styles.personalInfo}>
-            <Icon name="birthday-cake" size={15} color="#8f92a1" />
-            <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
-              Birthday
-            </Text>
-            <Text style={{color: '#333'}}>sept 24th, 1998</Text>
-          </View>
-
-          <View style={styles.personalInfo}>
-            <Icon
-              type="Ionicons"
-              name="male-female"
-              size={15}
-              color="#8f92a1"
-            />
-            {/* <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
-              Lives in
-            </Text> */}
-            <Text style={{color: '#333', marginHorizontal: 10}}>Male</Text>
-          </View>
-          <TouchableOpacity>
-            <Text style={{color: '#333'}}> ...see your about me</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Timeline</Text>
-          <TouchableOpacity>
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          horizontal
-          keyExtractor={(item, index) => String(index)}
-          data={timeline}
-          renderItem={({item}) => (
-            <TouchableOpacity style={styles.timelineBox}>
-              <View style={styles.timeline2}>
-                <Image source={{uri: item.uri}} style={styles.profileImg2} />
-                <View style={{marginHorizontal: 10}}>
-                  <Text style={{color: colors.expat}}>{item.title}</Text>
-                  <Text style={{color: '#333', fontSize: 10}}>
-                    {item.subTitle},
+        {loading && (
+          <ActivityIndicator
+            size="large"
+            style={{paddingVertical: 100, paddingHorizontal: 100}}
+          />
+        )}
+        {!loading && (
+          <>
+            <View style={styles.profileContainer}>
+              <View style={styles.profileHeader}>
+                <Icon
+                  type="MaterialIcons"
+                  // style={styles.playIcon}
+                  name="keyboard-arrow-left"
+                  size={25}
+                  color="#6d6e71"
+                />
+                <Text style={{color: '#333'}}>Profile</Text>
+                <View />
+              </View>
+              <View style={{padding: 0}}>
+                <Image
+                  resizeMode="stretch"
+                  source={{uri: getProfile?.avatar_urls?.full}}
+                  style={styles.profileImg}
+                />
+                <View style={styles.admin}>
+                  <Text style={{color: '#3376B9'}}>
+                    {getProfile?.is_wp_admin ? 'ADMIN' : 'MEMBER'}
                   </Text>
                 </View>
               </View>
-              <View style={{marginHorizontal: 20}}>
-                <Text style={{color: '#333', fontSize: 13}}>{item.desc}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Connections</Text>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color: colors.expat}}>12</Text>
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Groups</Text>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color: colors.expat}}>06</Text>
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Forums</Text>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            {/* <Text style={{color: colors.expat}}>06</Text> */}
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Media</Text>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color: colors.expat}}>126</Text>
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          horizontal
-          keyExtractor={(item, index) => String(index)}
-          data={data}
-          renderItem={({item}) => (
-            <TouchableOpacity style={styles.timelineBox2}>
-              <View>
-                <ImageBackground
-                  resizeMode="stretch"
-                  imageStyle={{borderRadius: 10}}
-                  source={{uri: item.img}}
-                  style={styles.logoImage2}>
-                  <Icon style={styles.playIcon} name="play" size={50} />
-                </ImageBackground>
-              </View>
-              <View style={{marginHorizontal: 20}}>
-                <Text style={{color: '#333', fontSize: 13}}>{item.desc}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Documents</Text>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text style={{color: colors.expat}}>03</Text>
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          horizontal
-          keyExtractor={(item, index) => String(index)}
-          data={data}
-          renderItem={({item}) => (
-            <TouchableOpacity style={styles.timelineBox2}>
-              <View>
-                <ImageBackground
-                  resizeMode="stretch"
-                  imageStyle={{borderRadius: 10}}
-                  source={{uri: item.img2}}
-                  style={styles.logoImage2}>
-                  <Icon
-                    type="Fontisto"
-                    style={styles.playIcon}
-                    name="folder"
-                    size={50}
-                    color="#6d6e71"
+              <View style={styles.headerText}>
+                <Text
+                  style={{
+                    color: '#333',
+                    fontSize: 15,
+                    letterSpacing: 8,
+                    alignSelf: 'center',
+                  }}>
+                  {getProfile?.name}
+                </Text>
+                <View style={styles.headerText2}>
+                  <Text style={{color: '#8f92a1'}}>
+                    @{getProfile?.profile_name}
+                  </Text>
+                  <View
+                    style={{
+                      margin: 5,
+                      backgroundColor: '#8f92a1',
+                      borderRadius: 100,
+                      width: 10,
+                      height: 10,
+                    }}
                   />
-                </ImageBackground>
+                  <Text style={{color: '#8f92a1'}}>
+                    {moment(profile?.registered_date).format('MMMM Do YYYY')}
+                  </Text>
+                </View>
+                <TouchableOpacity>
+                  <Text style={{color: '#8f92a1', textAlign: 'center'}}>
+                    About the person...
+                  </Text>
+                </TouchableOpacity>
               </View>
-              <View style={{marginHorizontal: 20}}>
-                <Text style={{color: '#333', fontSize: 13}}>{item.desc}</Text>
+              <TouchableOpacity
+                style={styles.editBtn}
+                onPress={() => {
+                  navigate(ProfileEdit, {getProfile});
+                }}>
+                <Text style={{color: '#3376B9', alignSelf: 'center'}}>
+                  Edit Profile
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{marginVertical: 10}} />
+            <View style={{paddingHorizontal: 20}}>
+              <View style={styles.personalInfo}>
+                <Icon name="home" size={15} color="#8f92a1" />
+                <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
+                  Lives in
+                </Text>
+                <Text style={{color: '#333'}}>
+                  india
+                  {/* {getProfile?.xprofile?.groups[1]?.fields[36]?.value?.raw} */}
+                </Text>
               </View>
+              <View style={styles.personalInfo}>
+                <Icon type="Entypo" name="location" size={15} color="#8f92a1" />
+                <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
+                  From
+                </Text>
+                <Text style={{color: '#333'}}>
+                  {getProfile?.xprofile?.groups[1]?.fields[36]?.value?.raw}
+                </Text>
+              </View>
+              <View style={styles.personalInfo}>
+                <Icon name="birthday-cake" size={15} color="#8f92a1" />
+                <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
+                  Birthday
+                </Text>
+                <Text style={{color: '#333'}}>
+                  {/* sept 24th, 1998 */}
+                  {moment(
+                    getProfile?.xprofile?.groups[6]?.fields[85]?.value?.raw,
+                  ).format('MMMM Do YYYY')}
+                </Text>
+              </View>
+
+              <View style={styles.personalInfo}>
+                <Icon
+                  type="Ionicons"
+                  name="male-female"
+                  size={15}
+                  color="#8f92a1"
+                />
+                {/* <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
+              Lives in
+            </Text> */}
+                <Text style={{color: '#333', marginHorizontal: 10}}>
+                  {getProfile?.xprofile?.groups[6]?.fields[88]?.value?.raw
+                    ? 'Male'
+                    : null}
+                </Text>
+              </View>
+              <TouchableOpacity>
+                <Text style={{color: '#333'}}> ...see your about me</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.footerSeparator} />
+            <TouchableOpacity
+              style={styles.timeline}
+              onPress={() => {
+                navigate(Timeline);
+              }}>
+              <Text style={styles.timelineText}>Timeline</Text>
+              <Icon
+                type="MaterialIcons"
+                name="keyboard-arrow-right"
+                size={30}
+                color="#333"
+              />
             </TouchableOpacity>
-          )}
-        />
+            {/* <FlatList
+              horizontal
+              keyExtractor={(item, index) => String(index)}
+              data={timeline}
+              renderItem={({item}) => (
+                <TouchableOpacity style={styles.timelineBox}>
+                  <View style={styles.timeline2}>
+                    <Image
+                      source={{uri: item.uri}}
+                      style={styles.profileImg2}
+                    />
+                    <View style={{marginHorizontal: 10}}>
+                      <Text style={{color: colors.expat}}>{item.title}</Text>
+                      <Text style={{color: '#333', fontSize: 10}}>
+                        {item.subTitle},
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={{marginHorizontal: 20}}>
+                    <Text style={{color: '#333', fontSize: 13}}>
+                      {item.desc}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            /> */}
+            <View style={styles.footerSeparator} />
+            <View style={styles.timeline}>
+              <Text style={styles.timelineText}>Connections</Text>
+              <TouchableOpacity
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.expat}}>12</Text>
+                <Icon
+                  type="MaterialIcons"
+                  name="keyboard-arrow-right"
+                  size={30}
+                  color="#333"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.footerSeparator} />
+            <View style={styles.timeline}>
+              <Text style={styles.timelineText}>Groups</Text>
+              <TouchableOpacity
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.expat}}>06</Text>
+                <Icon
+                  type="MaterialIcons"
+                  name="keyboard-arrow-right"
+                  size={30}
+                  color="#333"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.footerSeparator} />
+            <View style={styles.timeline}>
+              <Text style={styles.timelineText}>Forums</Text>
+              <TouchableOpacity
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                {/* <Text style={{color: colors.expat}}>06</Text> */}
+                <Icon
+                  type="MaterialIcons"
+                  name="keyboard-arrow-right"
+                  size={30}
+                  color="#333"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.footerSeparator} />
+            <View style={styles.timeline}>
+              <Text style={styles.timelineText}>Media</Text>
+              <TouchableOpacity
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.expat}}>126</Text>
+                <Icon
+                  type="MaterialIcons"
+                  name="keyboard-arrow-right"
+                  size={30}
+                  color="#333"
+                />
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              horizontal
+              keyExtractor={(item, index) => String(index)}
+              data={data}
+              renderItem={({item}) => (
+                <TouchableOpacity style={styles.timelineBox2}>
+                  <View>
+                    <ImageBackground
+                      resizeMode="stretch"
+                      imageStyle={{borderRadius: 10}}
+                      source={{uri: item.img}}
+                      style={styles.logoImage2}>
+                      <Icon style={styles.playIcon} name="play" size={50} />
+                    </ImageBackground>
+                  </View>
+                  <View style={{marginHorizontal: 20}}>
+                    <Text style={{color: '#333', fontSize: 13}}>
+                      {item.desc}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+            <View style={styles.footerSeparator} />
+            <View style={styles.timeline}>
+              <Text style={styles.timelineText}>Documents</Text>
+              <TouchableOpacity
+                style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.expat}}>03</Text>
+                <Icon
+                  type="MaterialIcons"
+                  name="keyboard-arrow-right"
+                  size={30}
+                  color="#333"
+                />
+              </TouchableOpacity>
+            </View>
+            <FlatList
+              horizontal
+              keyExtractor={(item, index) => String(index)}
+              data={data}
+              renderItem={({item}) => (
+                <TouchableOpacity style={styles.timelineBox2}>
+                  <View>
+                    <ImageBackground
+                      resizeMode="stretch"
+                      imageStyle={{borderRadius: 10}}
+                      source={{uri: item.img2}}
+                      style={styles.logoImage2}>
+                      <Icon
+                        type="Fontisto"
+                        style={styles.playIcon}
+                        name="folder"
+                        size={50}
+                        color="#6d6e71"
+                      />
+                    </ImageBackground>
+                  </View>
+                  <View style={{marginHorizontal: 20}}>
+                    <Text style={{color: '#333', fontSize: 13}}>
+                      {item.desc}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </>
+        )}
       </ScrollView>
     </>
   );
