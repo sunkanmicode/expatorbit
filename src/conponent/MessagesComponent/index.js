@@ -13,9 +13,13 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 import Container from '../../conponent/Container';
-import CustomButton from '../../conponent/CustomButton';
-import Input from '../../conponent/Input';
 import Icon from '../../conponent/CustomIcon/index'
 import styles from './styles';
 import Chat from '../../screens/Chat';
@@ -73,44 +77,58 @@ const MessagesComponent = ({isLoading, getMessages}) => {
         {isLoading && <ActivityIndicator size="large" />}
         {/* </View> */}
         {!isLoading &&
-          getMessages.map(
-            m =>
-              m.messages.map(k => (
-                <TouchableOpacity
-                  key={k.id}
-                  style={styles.messContainer}
-                  onPress={() => {
-                    navigate(Chat);
-                  }}
-                  onLongPress={()=>{
-                    
-                  }}
-                  >
-                  <View style={styles.groupsGridBox}>
-                    <Image
-                      resizeMode="stretch"
-                      // source={require('../../assets/images/group.png')}
-                      source={{uri: k?.sender_data?.user_avatars?.thumb}}
-                      style={styles.logoImage2}
-                    />
-                    <View style={{paddingLeft: 10}}>
-                      <View style={styles.subGroupView}>
-                        <Text style={styles.subGroupTextTile}>
-                          {k?.sender_data?.sender_name}
+          getMessages.map(m =>
+            m.messages.map(k => (
+              <>
+                <Menu>
+                  <TouchableOpacity
+                    key={k.id}
+                    style={styles.messContainer}
+                    onPress={() => {
+                      navigate(Chat);
+                    }}
+                    onLongPress={() => {}}>
+                    <View style={styles.groupsGridBox}>
+                      <Image
+                        resizeMode="stretch"
+                        // source={require('../../assets/images/group.png')}
+                        source={{uri: k?.sender_data?.user_avatars?.thumb}}
+                        style={styles.logoImage2}
+                      />
+                      <View style={{paddingLeft: 10}}>
+                        <View style={styles.subGroupView}>
+                          <Text style={styles.subGroupTextTile}>
+                            {k?.sender_data?.sender_name}
+                          </Text>
+                          {/* <Text style={{color: '#333'}}>{k?.display_date}</Text> */}
+                        </View>
+                        <Text style={styles.subGroupText}>
+                          {k?.message?.raw}
                         </Text>
-                        {/* <Text style={{color: '#333'}}>{k?.display_date}</Text> */}
                       </View>
-                      <Text style={styles.subGroupText}>{k?.message?.raw}</Text>
                     </View>
-                  </View>
-                  <Text style={{color: '#333'}}>
-                    {k?.display_date}
-                    <Icon name="right" type="AntDesign" color="#333" />
-                  </Text>
-                  {/* <Icon name="right" type="AntDesign" color="#333" /> */}
-                </TouchableOpacity>
-              )),
-            
+                    <Text style={{color: '#333'}}>
+                      {k?.display_date}
+                      <Icon name="right" type="AntDesign" color="#333" />
+                    </Text>
+                    {/* <Icon name="right" type="AntDesign" color="#333" /> */}
+                  </TouchableOpacity>
+                  <MenuTrigger text="Select action" />
+                  <MenuOptions>
+                    <MenuOption onSelect={() => alert(`Save`)} text="Save" />
+                    <MenuOption onSelect={() => alert(`Delete`)}>
+                      <Text style={{color: 'red'}}>Delete</Text>
+                    </MenuOption>
+                    <MenuOption
+                      onSelect={() => alert(`Not called`)}
+                      disabled={true}
+                      text="Disabled"
+                    />
+                  </MenuOptions>
+                </Menu>
+                <Text style={{color: '#333'}}>Hello world</Text>
+              </>
+            )),
           )}
       </Container>
     </ScrollView>

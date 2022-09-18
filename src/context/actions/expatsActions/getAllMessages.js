@@ -17,7 +17,7 @@ export default () => dispatch => {
         type: GET_MESSAGES_SUCCESS,
         payload: data,
       });
-      console.log(data, 'MESSAGES');
+      // console.log(data, 'MESSAGES');
     })
     .catch(error => {
       dispatch({

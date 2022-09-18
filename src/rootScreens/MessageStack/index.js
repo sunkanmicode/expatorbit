@@ -4,8 +4,7 @@ import Messages from '../../screens/Messages';
 import Chat from '../../screens/Chat';
 const HomeStack = createNativeStackNavigator();
 
-const MessageStack
- = () => {
+const MessageStack = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen

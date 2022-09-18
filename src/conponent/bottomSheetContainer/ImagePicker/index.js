@@ -5,7 +5,7 @@ import Icon from '../../CustomIcon';
 import styles from './styles';
 
 
-const ImagePickerCrop = ({onFileSelected}) => {
+const ImagePickerCrop = ({onFileSelected, fileSelected}) => {
   const options = [
     {
       name: 'Take a camera',
@@ -18,7 +18,9 @@ const ImagePickerCrop = ({onFileSelected}) => {
            freeStyleCropEnabled: true,
          })
            .then(image => {
+            //  fileSelected(image)
              onFileSelected(image);
+
              // console.log(image);
            })
            .catch(err => {
@@ -37,7 +39,9 @@ const ImagePickerCrop = ({onFileSelected}) => {
           freeStyleCropEnabled: true,
         })
           .then(image => {
-            onFileSelected(image)
+            // fileSelected(image)
+            onFileSelected(image);
+
             // console.log(image);
           })
           .catch(err => {

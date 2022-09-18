@@ -29,39 +29,40 @@ export default StyleSheet.create({
   categoryTest: {
     fontSize: 10,
     color: colors.black,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     backgroundColor: colors.white,
     margin: 5,
     padding: 7,
     borderRadius: 5,
     elevation: 5,
+    fontFamily: 'Poppins-Regular',
   },
   categoryTestSelected: {
     backgroundColor: colors.expat,
   },
   //member list
-  profileImg:{
+  profileImg: {
     width: 50,
     height: 50,
     borderRadius: 100,
   },
-  listCoontainer:{
-    flexDirection:'row',
+  listCoontainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     marginVertical: 15,
   },
-  listTitle:{
-    flexDirection:'row',
-    alignItems:'center',
+  listTitle: {
+    flexDirection: 'row',
+    alignItems: 'center',
     width: 300,
   },
-  iconWrapper:{
+  iconWrapper: {
     width: 30,
     height: 30,
     padding: 7,
     borderRadius: 100,
-    backgroundColor:colors.expat,
+    backgroundColor: colors.expat,
   },
 
   //old styles

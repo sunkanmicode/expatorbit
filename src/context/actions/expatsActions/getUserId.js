@@ -18,9 +18,9 @@ export default () => dispatch => {
     .then(data => {
         dispatch({
           type: GET_USER_ID_SUCCESS,
-          payload: data.id,
+          payload: data,
         });
-        console.log(data.id, 'userId');
+        // console.log(data, 'userId');
     })
     .catch(error => {
       // dispatch({

@@ -21,7 +21,7 @@ export default StyleSheet.create({
   // },
 
   profileContainer: {
-    height: '27%',
+    height: 420,
     width: '100%',
     // backgroundColor: '#f1f2f2',
     borderBottomRightRadius: 30,
@@ -110,7 +110,7 @@ export default StyleSheet.create({
   timelineText: {
     color: colors.grey,
     fontSize: 15,
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
   },
   timelineBox: {
     width: 300,
@@ -252,9 +252,49 @@ export default StyleSheet.create({
     fontWeight: '900',
     color: '#333',
   },
+  expatJourney: {
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+    paddingHorizontal: 10,
+  },
   footerSeparator: {
-    height: 0.5,
+    // height: 0.5,
     marginVertical: 10,
+    // marginBottom: 10,
+    padding: 0.5,
     backgroundColor: colors.grey,
+  },
+  expatLocation: {
+    width: '90%',
+    flexDirection: 'row',
+    // justifyContent: 'space-between',
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  expatJourneyInfo: {
+    width: '90%',
+    height: 300,
+    margin: 10,
+    // elevation: 0.5,
+    borderRadius: 20,
+    padding: 20,
+    borderWidth: 1,
+  },
+  interest: {
+    flexDirection: 'row',
+    width: 160,
+    height: 40,
+    backgroundColor: 'rgba(51,118,185, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 10,
+    borderRadius: 20,
+  },
+  circleBox: {
+    width: 30,
+    height: 30,
+    borderRadius: 100,
+    backgroundColor: 'red',
   },
 });

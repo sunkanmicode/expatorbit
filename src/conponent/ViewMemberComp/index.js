@@ -169,7 +169,10 @@ const ViewMemberComp = () => {
               size={25}
               color="#6d6e71"
             />
-            <Text style={{color: '#333'}}>Profile</Text>
+
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+              Profile
+            </Text>
             <View />
           </View>
           <View style={{padding: 0}}>
@@ -178,7 +181,9 @@ const ViewMemberComp = () => {
               style={styles.profileImg}
             />
             <View style={styles.admin}>
-              <Text style={{color: '#3376B9'}}>ADMIN</Text>
+              <Text style={{color: '#3376B9', fontFamily: 'Poppins-Regular'}}>
+                ADMIN
+              </Text>
             </View>
           </View>
           <View style={styles.headerText}>

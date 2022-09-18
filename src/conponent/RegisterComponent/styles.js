@@ -10,6 +10,14 @@ export default StyleSheet.create({
     borderRadius: 100,
     borderColor: colors.gray,
   },
+  logoImage2: {
+    height: 150,
+    width: 250,
+    alignSelf: 'center',
+    marginTop: 50,
+    borderRadius: 100,
+    borderColor: colors.gray,
+  },
   imgWrapper: {},
   imgIcon: {
     color: '#333',
@@ -29,7 +37,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
     // textAlign: 'center',
-    paddingTop: 20,
+    // paddingTop: 20,
     fontWeight: '700',
     color: '#231f20',
     fontFamily: 'Poppins',
@@ -38,7 +46,7 @@ export default StyleSheet.create({
   title2: {
     fontSize: 20,
     textAlign: 'center',
-    paddingTop: 20,
+    // paddingTop: 20,
     fontWeight: '700',
     color: colors.expat,
     fontFamily: 'Poppins',
@@ -103,5 +111,15 @@ export default StyleSheet.create({
     marginTop: 5,
     paddingLeft: 10,
     color: '#333',
+  },
+  iconImg: {
+    width: 30,
+    height: 30,
+    backgroundColor: colors.expat,
+    borderRadius: 100,
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 180,
   },
 });

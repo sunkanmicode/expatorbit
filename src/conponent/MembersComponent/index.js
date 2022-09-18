@@ -18,12 +18,26 @@ import { PROFILE, VIEWMEMBER } from '../../constants/routeNames';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from '../CustomIcon';
 import ViewMember from '../../screens/ViewMember';
+import MemberBottomSheet from '../bottomSheetContainer/MemberBottomSheet'
+import ViewMemberInfo from '../../screens/ViewMeberInfo';
+import getAllMembers from '../../context/actions/expatsActions/getAllMembers';
+import memberInfoData from '../../context/actions/expatsActions/memberInfoData';
+import colors from '../../assets/themes/colors';
+// import MemberBottomSheet from '../bottomSheetContainer/memberBottomSheet';
 
 
 const IMAGEDEFAULT =
   'https://www.citypng.com/public/uploads/small/31634946729ohd4odcijurvd40v45hl8lft4w1qmw8bx6fpldgscjmqvhptmmk00uh8j1ol5e20u2vd13ewb2ojyzg60xau3z3mkymxo7ydaql1.png';
 
-const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
+const MembersComponent = ({
+  isLoading,
+  getMembers,
+  navigation,
+  route,
+  // byPersonal,
+  getSingleMember,
+  handFilter,
+}) => {
   const {navigate} = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const [categoriesIndex, setCategoriesIndex] = useState(0);
@@ -31,7 +45,7 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
   const bottomSheetRef = useRef(null);
 
   // variables
-  const snapPoints = ['20%'];
+  const snapPoints = ['30%'];
 
   // callbacks
   const handleSheetChanges = useCallback(index => {
@@ -40,48 +54,43 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
     // console.log("handleSheetChanges", index);
   }, []);
 
-
   //categories
-    const categories = [
-      {
-        name: (
-          <Icon
-            type="Ionicons"
-            name="md-filter-outline"
-            color="#333"
-            size={15}
-          />
-        ),
-        onPress: () => {},
+  const categories = [
+    {
+      name: (
+        <Icon type="Ionicons" name="md-filter-outline" color="#333" size={15} />
+      ),
+      onPress: () => {},
+    },
+    {name: 'All Members', onPress: () => {}},
+    {
+      name: 'Connections',
+      onPress: () => {
+        handFilter();
+        // setCategoriesIndex()
       },
-      {name: 'All Members', onPress: () => {}},
-      {name: 'Connections', onPress: () => {}},
-      {name: 'New members', onPress: () => {}},
-      {name: 'EO Team', onPress: () => {}},
-    ];
+    },
+    {name: 'New members', onPress: () => {}},
+    {name: 'EO Team', onPress: () => {}},
+  ];
 
-      const CategoryList = () => {
-        return (
-          <View style={styles.categoryContainer}>
-            {categories.map((item, index) => (
-              <TouchableOpacity
-                key={index}>
-                <Text
-                  style={[
-                    styles.categoryTest,
-                    // categoriesIndex === index && styles.categoryTestSelected,
-                  ]}>
-                  {item.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        );
-      };
-
-      
-
-  
+  const CategoryList = () => {
+    return (
+      <View style={styles.categoryContainer}>
+        {categories.map((item, index) => (
+          <TouchableOpacity key={index} onPress={()=>{setCategoriesIndex(index), item.onPress}}>
+            <Text
+              style={[
+                styles.categoryTest,
+                categoriesIndex === index && styles.categoryTestSelected,
+              ]}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  };
 
   // const renderItem = ({item}) => {
   //   return (
@@ -108,7 +117,11 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
 
   return (
     <>
-      <ScrollView style={styles.wrapper}>
+      <View
+        style={[
+          styles.wrapper,
+          {backgroundColor: isOpen ? colors.grey : colors.white},
+        ]}>
         <View style={styles.headerWrapper}>
           <View style={styles.header}>
             <Icon
@@ -117,7 +130,14 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
               name="arrow-back-ios"
               color="#333"
             />
-            <Text style={{color: '#333', fontSize: 20}}>Members</Text>
+            <Text
+              style={{
+                color: '#333',
+                fontSize: 20,
+                fontFamily: 'Poppins-Regular',
+              }}>
+              Members
+            </Text>
           </View>
           <Icon type="MaterialIcons" size={20} name="search" color="#333" />
         </View>
@@ -125,7 +145,9 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
           <CategoryList />
         </View>
         <View style={{paddingVertical: 20}}>
-          <Text style={{color: '#333'}}>My Connections</Text>
+          <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+            My Connections
+          </Text>
         </View>
 
         <View style={{padding: 0}}>
@@ -135,22 +157,30 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
               style={{paddingVertical: 100, paddingHorizontal: 100}}
             />
           )}
-          {!isLoading && (
-            getMembers.map((item) => (
-              <>
+          {!isLoading &&
+            getMembers.map(item => (
+              <ScrollView>
                 <View style={styles.listCoontainer} key={item.id}>
                   <TouchableOpacity
                     style={styles.listTitle}
                     onPress={() => {
-                      navigate(VIEWMEMBER, {item});
+                      navigate('ViewMember', {item});
                     }}>
                     <Image
                       source={{uri: item?.avatar_urls?.full || IMAGEDEFAULT}}
                       style={styles.profileImg}
                     />
                     <View style={{marginHorizontal: 10}}>
-                      <Text style={{color: '#333'}}>{item.name}</Text>
-                      <Text style={{color: '#333', fontSize: 10}}>
+                      <Text
+                        style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+                        {item.name}
+                      </Text>
+                      <Text
+                        style={{
+                          color: '#333',
+                          fontSize: 10,
+                          fontFamily: 'Poppins-Regular',
+                        }}>
                         {item.link}
                       </Text>
                     </View>
@@ -158,6 +188,8 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
                   <TouchableOpacity
                     style={styles.iconWrapper}
                     onPress={() => {
+                      // navigate(ViewMemberInfo, {item});
+                      getSingleMember(item.id);
                       handleSheetChanges(0);
                     }}>
                     <Icon
@@ -168,11 +200,10 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
                     />
                   </TouchableOpacity>
                 </View>
-              </>
-            ))
-             )} 
+              </ScrollView>
+            ))}
         </View>
-      </ScrollView>
+      </View>
       {isOpen && (
         <BottomSheet
           ref={bottomSheetRef}
@@ -180,7 +211,8 @@ const MembersComponent  = ({isLoading, getMembers ,navigation, route, }) => {
           enablePanDownToClose={true}
           onClose={() => setIsOpen(false)}>
           <BottomSheetView>
-            <Text style={{color: '#333'}}>Hello wolrd</Text>
+            {/* <ViewMemberInfo /> */}
+            <MemberBottomSheet />
           </BottomSheetView>
         </BottomSheet>
       )}
