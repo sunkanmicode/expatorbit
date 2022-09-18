@@ -95,7 +95,7 @@ export default StyleSheet.create({
   timelineText: {
     color: colors.grey,
     fontSize: 15,
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
   },
   timelineBox: {
     width: 300,
@@ -255,27 +255,17 @@ export default StyleSheet.create({
   },
   categoryTest: {
     // width: 80,
-    letterSpacing: 2,
-    fontSize: 10,
+    fontSize: 12,
     color: colors.grey,
-    fontWeight: 'bold',
     backgroundColor: colors.white,
     margin: 5,
     padding: 7,
     borderRadius: 5,
     elevation: 5,
-
-    // fontSize: 10,
-    // color: colors.white,
-    // fontWeight: 'bold',
-    // // backgroundColor: colors.grey,
-    // margin: 5,
-    // padding: 7,
-    // borderRadius: 5,
-    // elevation: 5,
+    fontFamily: 'Poppins-Regular',
   },
   categoryTestSelected: {
-    backgroundColor: colors.expat,
+    backgroundColor: colors.accent,
     color: colors.white,
   },
 });

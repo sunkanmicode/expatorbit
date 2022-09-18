@@ -19,13 +19,36 @@ export default {
     error: null,
     loading: false,
   },
-  getTimeline:{
-    data:[],
+  getTimeline: {
+    data: [],
     loading: false,
-    error: null
+    error: null,
+  },
+  getPhotos: {
+    photoData: [],
+    photoLoading: false,
+    photoError: null,
+  },
+  getVideos: {
+    videoData: [],
+    videoLoading: false,
+    videoError: null,
+  },
+  getAlbums: {
+    albumsData: [],
+    albumsLoading: false,
+    albumsError: null,
+  },
+  getDocuments: {
+    documentsData: [],
+    documentsLoading: false,
+    documentsError: null,
   },
   getUser_Id: '',
+  likePost:'',
+  commentOnPost:"",
+  getCommentsOnPost:[],
+  memberInfo:{},
   isLoading: false,
   errors: null,
-  
 };

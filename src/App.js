@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import GlobalProvider from './context/Provider';
 import AppNarContainer from './navigations';
+import {MenuProvider} from 'react-native-popup-menu';
 
 // import { NavigationContainer } from '@react-navigation/native';
 // import {createStackNavigator} from '@react-navigation/stack';
@@ -19,9 +20,11 @@ import AppNarContainer from './navigations';
 
 const App  = () => {
   return (
-    <GlobalProvider>
-      <AppNarContainer />
-    </GlobalProvider>
+    <MenuProvider>
+      <GlobalProvider>
+        <AppNarContainer />
+      </GlobalProvider>
+    </MenuProvider>
   );
 };
 

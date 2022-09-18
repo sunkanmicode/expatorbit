@@ -21,7 +21,26 @@ import {
   //get Timeline
   GET_TIMELINE_LOADING,
   GET_TIMELINE_FAIL,
-  GET_TIMELINE_SUCCESS
+  GET_TIMELINE_SUCCESS,
+  //get videos
+  GET_PHOTOS_FAIL,
+  GET_PHOTOS_LOADING,
+  GET_PHOTOS_SUCCESS,
+  //get media video
+  GET_VIDEOS_FAIL,
+  GET_VIDEOS_LOADING,
+  GET_VIDEOS_SUCCESS,
+  // get albums
+  GET_ALBUMS_SUCCESS,
+  GET_ALBUMS_FAIL,
+  GET_ALBUMS_LOADING,
+  //like a post
+  LIKE_A_POST,
+  //comment on a post
+  COMMENT_ON_A_POST,
+  //get comments on post
+  GET_COMMENTS_ON_A_POST,
+  GET_MEMBER_INFO,
 } from '../../constants/actionTypes';
 
 const expatsReducer = (state, {type, payload}) => {
@@ -188,6 +207,120 @@ const expatsReducer = (state, {type, payload}) => {
           error: payload,
         },
       };
+    //get all media photos
+    case GET_PHOTOS_LOADING:
+      return {
+        ...state,
+        getPhotos: {
+          ...state.getPhotos,
+          photoLoading: true,
+          photoError: null,
+        },
+      };
+    case GET_PHOTOS_SUCCESS:
+      return {
+        ...state,
+        getPhotos: {
+          ...state.getPhotos,
+          photoLoading: false,
+          photoData: payload,
+          photoError: null,
+        },
+      };
+    case GET_PHOTOS_FAIL:
+      return {
+        ...state,
+        getPhotos: {
+          ...state.getPhotos,
+          photoLoading: false,
+          photoError: payload,
+        },
+      };
+    // get all media videos
+    case GET_VIDEOS_LOADING:
+      return {
+        ...state,
+        getVideos: {
+          ...state.getVideos,
+          videoLoading: true,
+          videoError: null,
+        },
+      };
+    case GET_VIDEOS_SUCCESS:
+      return {
+        ...state,
+        getVideos: {
+          ...state.getVideos,
+          videoLoading: false,
+          videoData: payload,
+          videoError: null,
+        },
+      };
+    case GET_VIDEOS_FAIL:
+      return {
+        ...state,
+        getVideos: {
+          ...state.getVideos,
+          videoLoading: false,
+          videoError: payload,
+        },
+      };
+    // get all albums
+    case GET_ALBUMS_LOADING:
+      return {
+        ...state,
+        getAlbums: {
+          ...state.getAlbums,
+          albumsLoading: true,
+          albumsError: null,
+        },
+      };
+    case GET_ALBUMS_SUCCESS:
+      return {
+        ...state,
+        getAlbums: {
+          ...state.getAlbums,
+          albumsLoading: false,
+          albumsData: payload,
+          albumsError: null,
+        },
+      };
+    case GET_ALBUMS_FAIL:
+      return {
+        ...state,
+        getAlbums: {
+          ...state.getAlbums,
+          albumsLoading: false,
+          albumsError: payload,
+        },
+      };
+    //Like post
+    case LIKE_A_POST:
+      return {
+        ...state,
+        // ...state.likepost,
+        likePost: payload,
+      };
+    //comment on post
+    case COMMENT_ON_A_POST:
+      return {
+        ...state,
+        commentOnPost: payload,
+      };
+      //get comments on post
+    case GET_COMMENTS_ON_A_POST:
+      return {
+        ...state,
+        // ...getCommentsOnPost,
+        getCommentsOnPost: payload,
+      };
+      //get member info
+      case GET_MEMBER_INFO:
+        return {
+          ...state,
+          memberInfo: payload,
+        };
+
 
     default:
       return state;

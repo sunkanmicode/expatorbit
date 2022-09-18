@@ -23,8 +23,6 @@ import moment from 'moment';
 // import {useRoute} from '@react-navigation/native';
 
 const ViewMemberComponent = ({viewMember, navigation}) => {
-  // const {params: {item = {}} = {}} = useRoute();
-  // console.log(item, 'params');
   const {navigate} = useNavigation();
   const [categoriesIndex, setCategoriesIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -160,7 +158,9 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
         ]}>
         <View style={styles.profileContainer}>
           <View style={styles.profileHeader}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>{
+              navigate.goBack()
+            }}>
               <Icon
                 type="MaterialIcons"
                 // style={styles.playIcon}
@@ -169,7 +169,9 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
                 color="#6d6e71"
               />
             </TouchableOpacity>
-            <Text style={{color: '#333'}}>Profile</Text>
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+              Profile
+            </Text>
             <View />
           </View>
           <View style={{padding: 0}}>
@@ -178,17 +180,23 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
               style={styles.profileImg}
             />
             <View style={styles.admin}>
-              <Text style={{color: '#3376B9'}}>
+              <Text style={{color: '#3376B9', fontFamily: 'Poppins-Regular'}}>
                 {viewMember?.is_wp_admin ? 'ADMIN' : 'MEMBER'}
               </Text>
             </View>
           </View>
           <View style={styles.headerText}>
-            <Text style={{color: '#333', fontSize: 15, letterSpacing: 8}}>
+            <Text
+              style={{
+                color: '#333',
+                fontSize: 20,
+                alignSelf: 'center',
+                fontFamily: 'Poppins-Regular',
+              }}>
               {viewMember?.name}
             </Text>
             <View style={styles.headerText2}>
-              <Text style={{color: '#8f92a1'}}>
+              <Text style={{color: '#8f92a1', fontFamily: 'Poppins-Regular'}}>
                 @{viewMember?.profile_name}
               </Text>
               <View
@@ -200,13 +208,17 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
                   height: 10,
                 }}
               />
-              <Text style={{color: '#8f92a1'}}>
-                Joined{' '}
+              <Text style={{color: '#8f92a1', fontFamily: 'Poppins-Regular'}}>
                 {moment(viewMember?.registered_date).format('MMMM Do YYYY')}
               </Text>
             </View>
             <TouchableOpacity>
-              <Text style={{color: '#8f92a1', textAlign: 'center'}}>
+              <Text
+                style={{
+                  color: '#8f92a1',
+                  textAlign: 'center',
+                  fontFamily: 'Poppins-Regular',
+                }}>
                 About the person...
               </Text>
             </TouchableOpacity>
@@ -218,15 +230,22 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
         <View style={{paddingHorizontal: 20}}>
           <View style={styles.personalInfo}>
             <Icon name="home" size={15} color="#8f92a1" />
-            <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
+            <Text
+              style={{
+                color: '#8f92a1',
+                marginHorizontal: 10,
+                fontFamily: 'Poppins-Regular',
+              }}>
               Lives in
             </Text>
-            <Text style={{color: '#333'}}>Norib, India</Text>
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+              Norib, India
+            </Text>
           </View>
           <View style={styles.personalInfo}>
             <Icon type="Entypo" name="location" size={15} color="#8f92a1" />
             <Text style={{color: '#8f92a1', marginHorizontal: 10}}>From</Text>
-            <Text style={{color: '#333'}}>
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
               {!viewMember?.xprofile?.groups[1]?.fields[36]?.value?.raw
                 ? null
                 : viewMember?.xprofile?.groups[1]?.fields[36]?.value?.raw}
@@ -234,16 +253,22 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
           </View>
           <View style={styles.personalInfo}>
             <Icon name="birthday-cake" size={15} color="#8f92a1" />
-            <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
+            <Text
+              style={{
+                color: '#8f92a1',
+                marginHorizontal: 10,
+                fontFamily: 'Poppins-Regular',
+              }}>
               Birthday
             </Text>
-            <Text style={{color: '#333'}}>
-              {!viewMember?.xprofile?.groups[6]?.fields  
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+              {!viewMember?.xprofile?.groups[6]?.fields
                 ? null
                 : viewMember?.xprofile?.groups[6]?.fields[85]?.value?.raw
                 ? moment(
-                    viewMember?.xprofile?.groups[6]?.fields[85]?.value?.raw
-                  ).format('MMMM Do YYYY') : null}
+                    viewMember?.xprofile?.groups[6]?.fields[85]?.value?.raw,
+                  ).format('MMMM Do YYYY')
+                : null}
             </Text>
           </View>
 
@@ -257,8 +282,13 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
             {/* <Text style={{color: '#8f92a1', marginHorizontal: 10}}>
               Lives in
             </Text> */}
-            <Text style={{color: '#333', marginHorizontal: 10}}>
-              {!viewMember?.xprofile?.groups[6]?.fields 
+            <Text
+              style={{
+                color: '#333',
+                marginHorizontal: 10,
+                fontFamily: 'Poppins-Regular',
+              }}>
+              {!viewMember?.xprofile?.groups[6]?.fields
                 ? null
                 : viewMember?.xprofile?.groups[6]?.fields[88]?.value?.raw
                 ? 'Male'
@@ -266,7 +296,9 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
             </Text>
           </View>
           <TouchableOpacity>
-            <Text style={{color: '#333'}}> ...see your about me</Text>
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+              ...see your about me
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.footerSeparator} />
@@ -290,14 +322,32 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
               <View style={styles.timeline2}>
                 <Image source={{uri: item.uri}} style={styles.profileImg2} />
                 <View style={{marginHorizontal: 10}}>
-                  <Text style={{color: colors.expat}}>{item.title}</Text>
-                  <Text style={{color: '#333', fontSize: 10}}>
+                  <Text
+                    style={{
+                      color: colors.expat,
+                      fontFamily: 'Poppins-Regular',
+                    }}>
+                    {item.title}
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#333',
+                      fontSize: 10,
+                      fontFamily: 'Poppins-Regular',
+                    }}>
                     {item.subTitle},
                   </Text>
                 </View>
               </View>
               <View style={{marginHorizontal: 20}}>
-                <Text style={{color: '#333', fontSize: 13}}>{item.desc}</Text>
+                <Text
+                  style={{
+                    color: '#333',
+                    fontSize: 13,
+                    fontFamily: 'Poppins-Regular',
+                  }}>
+                  {item.desc}
+                </Text>
               </View>
             </TouchableOpacity>
           )}
@@ -415,7 +465,14 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
                 </ImageBackground>
               </View>
               <View style={{marginHorizontal: 20}}>
-                <Text style={{color: '#333', fontSize: 13}}>{item.desc}</Text>
+                <Text
+                  style={{
+                    color: '#333',
+                    fontSize: 13,
+                    fontFamily: 'Poppins-Regular',
+                  }}>
+                  {item.desc}
+                </Text>
               </View>
             </TouchableOpacity>
           )}

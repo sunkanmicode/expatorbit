@@ -21,8 +21,8 @@ export default StyleSheet.create({
     marginRight: 10,
   },
   profileImg2: {
-    width: 45,
-    height: 45,
+    width: 30,
+    height: 30,
     borderRadius: 100,
     marginRight: 8,
   },
@@ -75,7 +75,7 @@ export default StyleSheet.create({
   TimelineImg: {
     width: '100%',
     height: 400,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     // marginRight: 10,
   },
   icons: {
@@ -87,13 +87,20 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   comment: {
-    width: 400,
-    height: 120,
+    width: 380,
+    height: 150,
     borderTopRightRadius: 30,
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 50,
     // padding: 20,
     backgroundColor: '#f5f5f5',
+    marginVertical: 20,
+  },
+  footerSeparator: {
+    // height: 0.5,
     marginVertical: 10,
+    // marginBottom: 10,
+    padding: 0.5,
+    backgroundColor: colors.grey,
   },
 });

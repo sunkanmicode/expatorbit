@@ -7,6 +7,7 @@ import AuthNavigator from './AuthNavigator';
 import {GlobalContext} from '../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, ImageBackground} from 'react-native';
+
 import getUserId from '../context/actions/expatsActions/getUserId';
 
 const AppNarContainer = () => {
@@ -42,7 +43,7 @@ const AppNarContainer = () => {
   useEffect(() => {
     getUser();
     getUserId()(expatsDispatch);
-  }, [getUser_Id]);
+  }, []);
 
   
   useEffect(() => {
@@ -65,15 +66,17 @@ const AppNarContainer = () => {
             <AuthNavigator />
           )}
         </NavigationContainer>
-      ) : (
-        <ActivityIndicator style={{flex: 1}} />
-        // <ImageBackground
-        //   resizeMode="stretch"
-        //   source={require('../assets/images/logo.png')}
-        //   // style={styles.logoImage}
-        //   style={{flex: 1}}>
-
-        //   </ImageBackground>
+      ) : ( null
+        // <ActivityIndicator style={{flex: 1}} />
+        // <VideoPlayer
+        //   resizeMode="cover"
+        //   hideShutterView={true}
+        //   // paused={true}
+        //   source={require('../assets/videos/expat.mp4')}
+        //   // controls={true}
+        //   style={{width: '100%', height: '100%'}}
+        //   // style={styles.mediaBox}
+        // />
       )}
     </>
   );

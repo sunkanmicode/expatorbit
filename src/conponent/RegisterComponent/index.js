@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 var moment = require('moment');
+import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import Container from '../../conponent/Container';
 import CustomButton from '../../conponent/CustomButton';
 import Input from '../../conponent/Input';
@@ -17,10 +18,18 @@ import styles from './styles';
 import CustomDatePicker from '../CustomDatePicker';
 import CustomSelectOption from '../CustomSelectOption';
 import Icon from '../CustomIcon';
+import ImagePickerCrop from '../bottomSheetContainer/ImagePicker';
+import VideoPlayer from 'react-native-video-controls';
+import DropDownPicker from 'react-native-dropdown-picker';
+ 
+
+const IMAGEDEFAULT =
+  'https://www.citypng.com/public/uploads/small/31634946729ohd4odcijurvd40v45hl8lft4w1qmw8bx6fpldgscjmqvhptmmk00uh8j1ol5e20u2vd13ewb2ojyzg60xau3z3mkymxo7ydaql1.png';
 
 const RegisterComponent = ({
   form,
   errors,
+  navigation,
   onChangeForm,
   onSubmit,
   datePickerOpen,
@@ -30,16 +39,67 @@ const RegisterComponent = ({
   options2,
   options3
 }) => {
+  //! working...
+    // const [open, setOpen] = useState(false);
+    //  const [value, setValue] = useState([
+    //    'italy',
+    //    'spain',
+    //    'barcelona',
+    //    'finland',
+    //  ]);
+    //  const [items, setItems] = useState([
+    //    {label: 'Spain', value: 'spain'},
+    //    {label: 'Madrid', value: 'madrid', parent: 'spain'},
+    //    {label: 'Barcelona', value: 'barcelona', parent: 'spain'},
+
+    //    {label: 'Italy', value: 'italy'},
+    //    {label: 'Rome', value: 'rome', parent: 'italy'},
+
+    //    {label: 'Finland', value: 'finland'},
+    //  ]);
+    //! end of working
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectLocalFile, setSelectLocalFile] = useState(null);
   const [isSecureEntry, setIsSecureEntry] = useState(true)
   const [isSecureEntry2, setIsSecureEntry2] = useState(true);
   const [formStep, setFormStep] = useState(0);
   const {navigate} = useNavigation();
 
+   const [selectedTeam, setSelectedTeam] = useState({});
+   const [selectedTeams, setSelectedTeams] = useState([]);
+
+ 
+
+
+
+  // ref
+  const bottomSheetRef = useRef(null);
+
+  // variables
+  const snapPoints = ['20%', '60%', '85%'];
+
+  // callbacks
+  const handleSheetChanges = useCallback(index => {
+    bottomSheetRef.current?.snapToIndex(index);
+    setIsOpen(true);
+    // console.log("handleSheetChanges", index);
+  }, []);
+
+  
+
+  const onFileSelected = image => {
+    setIsOpen(false);
+    setSelectLocalFile(image);
+    console.log(image, 'img');
+  };
+
+  console.log(selectLocalFile, 'selectLocalFile');
+
   const completeNextForm = () => {
     setFormStep(cur => cur + 1);
   };
    const completePrevForm = () => {
-    if(formStep < 0){
+    if(formStep === 0){
       return null
     }
      setFormStep(cur => cur - 1);
@@ -63,14 +123,40 @@ const RegisterComponent = ({
   //     }
   //   }
   // }
+  const K_OPTIONS = [
+  {
+    item: 'Juventus',
+    id: 'JUVE',
+  },
+  {
+    item: 'Real Madrid',
+    id: 'RM',
+  },
+  {
+    item: 'Barcelona',
+    id: 'BR',
+  },
+  {
+    item: 'PSG',
+    id: 'PSG',
+  },
+]
+function onMultiChange() {
+  return item => setSelectedTeams(xorBy(selectedTeams, [item], 'id'));
+}
+
+function onChange() {
+  return val => setSelectedTeam(val);
+}
 
   return (
     <>
       <View style={styles.signUpWrapper}>
-        <TouchableOpacity onPress={()=>{
-          completePrevForm()
-        }}>
-          <Icon type="AntDesign" name="arrowleft" size={24} color="#333"  />
+        <TouchableOpacity
+          onPress={() => {
+            completePrevForm();
+          }}>
+          <Icon type="AntDesign" name="arrowleft" size={24} color="#333" />
         </TouchableOpacity>
         {formStep === 3 ? (
           <Text style={styles.signUp}>Verification</Text>
@@ -84,14 +170,27 @@ const RegisterComponent = ({
         <View style={styles.signBox}>
           {formStep === 3 ? null : (
             <>
-              <View style={styles.imgWrapper}>
+              <TouchableOpacity
+                style={styles.imgWrapper}
+                onPress={() => handleSheetChanges(0)}>
                 <Image
                   resizeMode="stretch"
-                  source={require('../../assets/images/user.png')}
+                  source={{
+                    uri: selectLocalFile?.path || IMAGEDEFAULT,
+                  }}
                   style={styles.logoImage}
                 />
-              </View>
-              <Text style={styles.imgIcon}>Icon</Text>
+                <View style={styles.iconImg}>
+                  <Icon
+                    type="Ionicons"
+                    name="camera"
+                    size={20}
+                    S
+                    color="#FFF"
+                    style={{alignSelf: 'center', padding: 4}}
+                  />
+                </View>
+              </TouchableOpacity>
             </>
           )}
 
@@ -245,13 +344,37 @@ const RegisterComponent = ({
                 <Input
                   label="Gender "
                   placeholder="Host Country"
-                  //! coming to meet
+                  // ! coming to meet
                   onChangeText={value => {
                     onChangeForm({name: 'email', value: value});
                   }}
                   // icon={<Text>HIDE</Text>}
                   iconPositon="left"
                 />
+                {/* //!dropDown */}
+{/* 
+                <DropDownPicker
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  // setItems={setItems}
+                  theme="DARK"
+                  multiple={true}
+                  mode="BADGE"
+                  badgeDotColors={[
+                    '#e76f51',
+                    '#00b4d8',
+                    '#e9c46a',
+                    '#e76f51',
+                    '#8ac926',
+                    '#00b4d8',
+                    '#e9c46a',
+                  ]}
+                /> */}
+
+                {/* //!dropDown */}
               </>
             )}
             {/*//! {step 3} */}
@@ -293,14 +416,8 @@ const RegisterComponent = ({
                   options={options}
                 />
 
-                <CustomSelectOption 
-                  label="My Interest" 
-                  options={options} 
-                  />
-                <CustomSelectOption 
-                label="My Challenges" 
-                options={options} 
-                /> 
+                <CustomSelectOption label="My Interest" options={options} />
+                <CustomSelectOption label="My Challenges" options={options} />
               </>
             )}
             {formStep === 3 && (
@@ -308,12 +425,17 @@ const RegisterComponent = ({
                 <View style={styles.upload}>
                   <Text style={styles.title2}>Upload Documents</Text>
 
-                  <View style={{paddingVertical: 70, paddingHorizontal: 100}}>
-                    <Icon
+                  <View style={{paddingVertical: 20, paddingHorizontal: 100}}>
+                    {/* <Icon
                       type="AntDesign"
                       name="check"
                       size={100}
                       color="#3376B9"
+                    /> */}
+                    <Image
+                      resizeMode="cover"
+                      source={require('../../assets/images/make.png')}
+                      style={styles.logoImage2}
                     />
                   </View>
                   <View>
@@ -326,6 +448,7 @@ const RegisterComponent = ({
                       color: '#8f92a1',
                       fontSize: 10,
                       textAlign: 'center',
+                      fontFamily: 'Poppins-Regular',
                     }}>
                     Kindly submit your documents to make this a safe space for
                     everyone.Read our privacy policy to know more
@@ -335,7 +458,7 @@ const RegisterComponent = ({
                 <View style={styles.form}>
                   <Input
                     label="Passport"
-                    style={{color: '#333'}}
+                    style={{color: '#333', fontFamily: 'Poppins-Regular'}}
                     placeholder="Username or Email"
                     onChangeText={value => {
                       onChangeForm({name: 'username', value});
@@ -373,6 +496,17 @@ const RegisterComponent = ({
           </View>
         </View>
       </Container>
+      {isOpen && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          snapPoints={snapPoints}
+          enablePanDownToClose="true"
+          onClose={() => setIsOpen(false)}>
+          <BottomSheetView>
+            <ImagePickerCrop onFileSelected={onFileSelected} />
+          </BottomSheetView>
+        </BottomSheet>
+      )}
     </>
   );
 };

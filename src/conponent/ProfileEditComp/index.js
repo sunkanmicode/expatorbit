@@ -86,8 +86,10 @@ console.log(localFile, '11111')
           {backgroundColor: isOpen ? colors.grey : colors.white},
         ]}>
         <View style={styles.signUpWrapper}>
-          <TouchableOpacity onPress={()=>{
-          completePrevForm() }}>
+          <TouchableOpacity
+            onPress={() => {
+              completePrevForm();
+            }}>
             <Icon type="AntDesign" name="arrowleft" size={24} color="#333" />
           </TouchableOpacity>
           <Text style={styles.signUp}>Edit Profile</Text>
@@ -102,7 +104,7 @@ console.log(localFile, '11111')
                 <Image
                   resizeMode="stretch"
                   source={{
-                    uri: localFile?.path || IMAGEDEFAULT
+                    uri: localFile?.path || IMAGEDEFAULT,
                   }}
                   style={styles.logoImage}
                 />
@@ -308,16 +310,17 @@ console.log(localFile, '11111')
             title="Next"
           />
         </View>
-
-        <BottomSheet
-          ref={bottomSheetRef}
-          snapPoints={snapPoints}
-          enablePanDownToClose={true}
-          onClose={() => setIsOpen(false)}>
-          <BottomSheetView>
-            <ImagePickerCrop onFileSelected={onFileSelected} />
-          </BottomSheetView>
-        </BottomSheet>
+        {isOpen && (
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            enablePanDownToClose={true}
+            onClose={() => setIsOpen(false)}>
+            <BottomSheetView>
+              <ImagePickerCrop onFileSelected={onFileSelected} />
+            </BottomSheetView>
+          </BottomSheet>
+        )}
       </GestureHandlerRootView>
       {/* </Container> */}
     </>
