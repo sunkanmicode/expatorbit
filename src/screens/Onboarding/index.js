@@ -84,15 +84,15 @@ const Onboarding = ({navigation}) => {
 
   const updateCurrentSlideIndex =(e)=>{
     const contentOffsetX = e.nativeEvent.contentOffset.x;
-    const currentIndex = Math.round(contentOffsetX/width);
+    const currentIndex = Math.round(contentOffsetX / width);
     setCurrentSlidesIndex(currentIndex);
-    console.log(currentIndex);
+    // console.log(currentIndex);
   }
 
 
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container}>  
       <View>
         <FlatList
           data={slides}
@@ -121,7 +121,9 @@ const Onboarding = ({navigation}) => {
       </View>
       <View style={styles.createSection}>
         <Text style={styles.infoText}>Don't have a code?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>{
+          navigation.navigate('REQUESTINVITE');
+        }}>
           <Text style={styles.linkBtn}>Request Invite</Text>
         </TouchableOpacity>
       </View>

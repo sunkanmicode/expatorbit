@@ -14,7 +14,7 @@ const Media = () => {
     },
   } = useContext(GlobalContext);
 
-   console.log({videoData}, 'media');
+   console.log({videoData}, 'videoData');
 
   React.useEffect(() => {
     getAllPhotos()(expatsDispatch);

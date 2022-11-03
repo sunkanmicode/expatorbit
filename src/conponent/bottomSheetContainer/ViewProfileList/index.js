@@ -31,20 +31,33 @@ const ViewProfileList = ({
     },
   ];
 
+  
+
+
+
+
+
   return (
-    <View style={styles.optionsWrapper}>
-      {options.map((list, index) => (
-        <TouchableOpacity
-          key={list.name}
-          style={styles.pickerOption}
-          onPress={list.onPress}>
-          <Text
-            style={[styles.text, categoriesIndex === index && styles.selected]}>
-            {list.name}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <>
+      
+
+      <View style={styles.optionsWrapper}>
+        {options.map((list, index) => (
+          <TouchableOpacity
+            key={list.name}
+            style={styles.pickerOption}
+            onPress={list.onPress}>
+            <Text
+              style={[
+                styles.text,
+                categoriesIndex === index && styles.selected,
+              ]}>
+              {list.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </>
   );
 };
 

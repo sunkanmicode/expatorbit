@@ -20,6 +20,11 @@ const AccountStack = () => {
         component={ProfileStack}
         options={{headerShown: false}}
       />
+      <HomeStack.Screen
+        name="Profile"
+        component={Profile}
+        options={{headerShown: false}}
+      />
       {/* <HomeStack.Screen
         name="Notification"
         component={Notifications}

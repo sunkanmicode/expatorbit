@@ -11,7 +11,7 @@ const Comments = () => {
   // console.log(item, 'RouteComments');
   const [form, setForm] = React.useState({});
 
-  console.log(item.id, 'comment5555');
+  // console.log(item.id, 'comment5555');
   const {
     expatsDispatch,
     expatsState: {
@@ -19,15 +19,21 @@ const Comments = () => {
       likePost,
       commentOnPost,
       getCommentsOnPost,
+      getAllTmelineComments:{commentsData,commentLoading,commentError },
       getTimeline: {data, loading},
     },
   } = useContext(GlobalContext);
+
+  const reTryComment = (id)=>{
+    getAllComments(id)(expatsDispatch);
+
+  }
 
   React.useEffect(() => {
     getAllComments(item.id)(expatsDispatch);
   }, [commentOnPost, item.id]);
 
-  // console.log(getCommentsOnPost, 'Comment80000');
+  console.log({commentOnPost, commentsData}, 'Comment80000');
 
   const onChangeForm = ({name, value}) => {
     setForm({...form, [name]: value});
@@ -36,18 +42,21 @@ const Comments = () => {
 
   const onSubmit = (id) => {
     console.log(form, 'form');
-    //  if (form.content) {
+     if (form.content) {
        makeComment(form.content, id)(expatsDispatch);
        setForm({})
-    //  }
+     }
   };
 
   return (
     <CommentsComponent
-      getCommentsOnPost={getCommentsOnPost}
+      getCommentsOnPost={commentsData}
       onChangeForm={onChangeForm}
       onSubmit={onSubmit}
       item={item}
+      commentLoading={commentLoading}
+      commentError={commentError}
+      reTryComment={reTryComment}
     />
   );
 };;

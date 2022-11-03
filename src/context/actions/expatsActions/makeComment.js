@@ -2,8 +2,8 @@ import {COMMENT_ON_A_POST} from '../../../constants/actionTypes';
 import axiosInstance from '../../../helpers/axiosInstance';
 
 export default (content,id) => dispatch => {
-  // console.log(content, 'content');
-  // console.log(id, 'conentID');
+  console.log(content, 'content');
+  console.log(id, 'conentID');
   const payload = {
     content,
   };

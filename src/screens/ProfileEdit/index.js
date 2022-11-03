@@ -1,13 +1,20 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
+
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import ProfileEditComp from '../../conponent/ProfileEditComp';
 
 
 const ProfileEdit = () => {
-  const parama =   useRoute();
-  console.log(parama, 'getProfile3000')
+  const [form, setForm] = useState({});
   const {navigate} = useNavigation();
+
+  
+  // const parama = useRoute();
+  // console.log(parama, 'getProfile3000');
+  const {params: {getProfile = {}} = {}} = useRoute()
+  console.log(getProfile, 'params3455');
+
   const [isOpen, setIsOpen] = useState(true);
   // // ref
   const bottomSheetRef = useRef(null);
@@ -22,8 +29,12 @@ const ProfileEdit = () => {
     setIsOpen(true);
     // console.log("handleSheetChanges", index);
   }, []);
-  // const handleClosePress = () => bottomSheetRef.current.close();
-  // const handleOpenPress = () => bottomSheetRef.current.open();
+
+  //onChange
+    const onChange = ({name, value}) => {
+    setForm({...form, [name]: value});
+    }
+  
 
   return (
     <ProfileEditComp
@@ -32,6 +43,9 @@ const ProfileEdit = () => {
       handleSheetChanges={handleSheetChanges}
       setIsOpen={setIsOpen}
       isOpen={isOpen}
+      getProfile={getProfile}
+      onChange={onChange}
+      form={form}
     />
   );
 };

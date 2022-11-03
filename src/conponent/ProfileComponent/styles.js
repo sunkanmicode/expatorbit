@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../assets/themes/colors';
 
+
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -26,7 +27,7 @@ export default StyleSheet.create({
     // backgroundColor: '#f1f2f2',
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
-    elevation: 0.5,
+    elevation: 7,
   },
   profileHeader: {
     flexDirection: 'row',
@@ -43,6 +44,16 @@ export default StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 100,
     // marginTop: 5,
+  },
+  expatImgLine: {
+    width: 220,
+    height: 20,
+    // backgroundColor: '#333',
+    // borderWidth: 5,
+    // borderColor: colors.expat,
+    // alignSelf: 'center',
+    // borderRadius: 100,
+    // // marginTop: 5,
   },
   profileImg2: {
     width: 50,
@@ -270,24 +281,25 @@ export default StyleSheet.create({
     flexDirection: 'row',
     // justifyContent: 'space-between',
     marginHorizontal: 20,
-    marginVertical: 10,
+    marginVertical: 20,
   },
   expatJourneyInfo: {
     width: '90%',
     height: 300,
-    margin: 10,
+    // margin: 10,
     // elevation: 0.5,
+    alignSelf:'center',
     borderRadius: 20,
     padding: 20,
     borderWidth: 1,
   },
   interest: {
     flexDirection: 'row',
-    width: 160,
-    height: 40,
+    // width: 160,
+    // height: 40,
     backgroundColor: 'rgba(51,118,185, 0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     margin: 10,
     borderRadius: 20,
   },

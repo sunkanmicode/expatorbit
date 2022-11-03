@@ -11,6 +11,7 @@ import { GlobalContext } from '../../context/Provider'
 const Timeline = () => {
   const [openComment, setOpenComment] = useState(false);
   const [openCommentTextInput, setOpenCommentTextInput] = useState(false);
+  const sheetRef = React.useRef(null);
 
   const {
     expatsDispatch,
@@ -19,11 +20,11 @@ const Timeline = () => {
       likePost,
       commentOnPost,
       getCommentsOnPost,
-      getTimeline: {data, loading},
+      getTimeline: {data, loading, error},
     },
   } = useContext(GlobalContext);
 
-  // console.log(getCommentsOnPost, 'Comment');
+  console.log(error, 'timeline');
   //? logic for like post
   const newData = data.map(item => {
     if (item.id === likePost.id) {
@@ -33,10 +34,10 @@ const Timeline = () => {
     }
   });
 
-    const getAllCommentOnPost =(id)=>{
-      console.log(id, 'commentId')
-      getAllComments(id)(expatsDispatch);
-    }
+  const getAllCommentOnPost = id => {
+    console.log(id, 'commentId');
+    getAllComments(id)(expatsDispatch);
+  };
 
   // console.log(getUser_Id.id, 'getUser_Id.id');
 
@@ -45,20 +46,35 @@ const Timeline = () => {
     postLike(id)(expatsDispatch);
   };
 
+  const closeSheet = () => {
+    if (sheetRef.current) {
+      sheetRef.current.close();
+    }
+  };
+  const openSheet = () => {
+    if (sheetRef.current) {
+      sheetRef.current.open();
+    }
+  };
+
   useEffect(() => {
     // getProfileDatails(getUser_Id);
     getAllTimeLine(getUser_Id.id)(expatsDispatch);
-  }, [getUser_Id.id,expatsDispatch]);
+  }, [getUser_Id.id, expatsDispatch]);
 
   return (
     <TimelineComponent
       data={newData}
       loading={loading}
+      error={error}
       favoritePost={favoritePost}
       openComment={openComment}
       setOpenComment={setOpenComment}
       getUser_Id={getUser_Id}
       getAllCommentOnPost={getAllCommentOnPost}
+      closeSheet={closeSheet}
+      openSheet={openSheet}
+      sheetRef={sheetRef}
     />
   );
 }

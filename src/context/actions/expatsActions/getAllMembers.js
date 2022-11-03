@@ -12,7 +12,7 @@ export default () => dispatch => {
   dispatch({
     type: GET_MEMBERS_LOADING,
   });
-  axiosInstance(`${ROOT_URL}wp-json/buddyboss/v1/members`)
+  axiosInstance(`${ROOT_URL}wp-json/buddyboss/v1/members?scope=all`)
     .then(res => {
       dispatch({
         type: GET_MEMBERS_SUCCESS,
@@ -20,12 +20,12 @@ export default () => dispatch => {
       });
       // console.log(data, 'MEMBERS');
     })
-    .catch(error => {
+    .catch(err => {
       dispatch({
         type: GET_MEMBERS_FAIL,
         payload: err.response
           ? err.response.data
-          : {error: 'something went wrong'},
+          : {err: 'something went wrong'},
       });
       // console.log(error, 'something went wrong');
     });

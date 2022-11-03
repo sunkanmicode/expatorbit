@@ -8,7 +8,8 @@ import Profile from '../../screens/Profile';
 
 const AccountComponent = ({navigation, item, loading, getUser_Id}) => {
   const {navigate} = useNavigation();
-  // console.log(item.avatar_urls.full, 'getpro4444444');
+  console.log(getUser_Id?.member_rest?.avatar.full, 'getUser_Id7889');
+
 
   const categories = [
     {
@@ -165,12 +166,13 @@ const AccountComponent = ({navigation, item, loading, getUser_Id}) => {
       <TouchableOpacity
         style={styles.accountProfile}
         onPress={() => {
+          // navigate('Profile', {item});
           navigate('ProfileStack', {item});
         }}>
         <View style={styles.acountImg}>
           <Image
-          resizeMode='stretch'
-            source={{uri:getUser_Id?.member_rest?.avatar?.full}}
+            resizeMode="stretch"
+            source={{uri: getUser_Id?.member_rest?.avatar?.full}}
             style={styles.logoImage}
           />
           <Text

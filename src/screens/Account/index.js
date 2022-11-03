@@ -5,7 +5,7 @@ import getUserId from '../../context/actions/expatsActions/getUserId';
 import { GlobalContext } from '../../context/Provider';
 
 
-const Account = ({navigations}) => {
+const Account = ({navigation}) => {
 
 
   const {

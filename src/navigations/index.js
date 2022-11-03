@@ -25,7 +25,7 @@ const AppNarContainer = () => {
     try {
       const user = await AsyncStorage.getItem('user');
       const token = await AsyncStorage.getItem('token');
-      console.log({user,token}, 'user200')
+      console.log({token,user}, 'user200')
 
       if (user || token) {
         setAuthLoad(true);

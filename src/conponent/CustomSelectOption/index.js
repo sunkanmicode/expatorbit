@@ -12,10 +12,11 @@ const CustomSelectOption = ({
   //   onChangeText,
   label,
   icon,
-  //   value,
+    value,
   iconPositon,
   error,
   options,
+  selectedValue,
   ...props
 }) => {
   const [focused, setFocused] = useState(false);
@@ -61,12 +62,14 @@ const CustomSelectOption = ({
             {alignItems: icon ? 'center' : 'baseline'},
             {
               borderColor: getBorderColor(),
-            //   flexDirection: getFlexDirection()
+              //   flexDirection: getFlexDirection()
             },
           ]}>
           <View>{icon && icon}</View>
           <RNPickerSelect
             style={pickerSelectStyles}
+            selectedValue={selectedValue}
+            value={value}
             onValueChange={value => console.log(value)}
             items={options}
           />

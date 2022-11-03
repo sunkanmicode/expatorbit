@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useCallback, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { PROFILE, VIEWMEMBER } from '../../constants/routeNames';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import Icon from '../CustomIcon';
 import ViewMember from '../../screens/ViewMember';
@@ -23,6 +24,7 @@ import ViewMemberInfo from '../../screens/ViewMeberInfo';
 import getAllMembers from '../../context/actions/expatsActions/getAllMembers';
 import memberInfoData from '../../context/actions/expatsActions/memberInfoData';
 import colors from '../../assets/themes/colors';
+import { useEffect } from 'react';
 // import MemberBottomSheet from '../bottomSheetContainer/memberBottomSheet';
 
 
@@ -50,9 +52,25 @@ const MembersComponent = ({
   // callbacks
   const handleSheetChanges = useCallback(index => {
     bottomSheetRef.current?.snapToIndex(index);
-    setIsOpen(true);
+    setIsOpen(!isOpen);
     // console.log("handleSheetChanges", index);
   }, []);
+
+  // const closeSheet = ()=>{
+  //   if(bottomSheetRef.current){
+  //      bottomSheetRef.current.close();
+  //   }
+  // }
+  // const openSheet = () => {
+  //   if (bottomSheetRef.current) {
+  //     bottomSheetRef.current.open();
+  //   }
+  // };
+  //  const handleClosePress = () => bottomSheetRef.current.close();
+
+
+  
+
 
   //categories
   const categories = [
@@ -117,7 +135,7 @@ const MembersComponent = ({
 
   return (
     <>
-      <View
+      <ScrollView
         style={[
           styles.wrapper,
           {backgroundColor: isOpen ? colors.grey : colors.white},
@@ -141,75 +159,81 @@ const MembersComponent = ({
           </View>
           <Icon type="MaterialIcons" size={20} name="search" color="#333" />
         </View>
-        <View>
+        <ScrollView horizontal>
           <CategoryList />
-        </View>
-        <View style={{paddingVertical: 20}}>
-          <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
-            My Connections
-          </Text>
-        </View>
+        </ScrollView>
+        <View>
+          <View style={{paddingVertical: 20}}>
+            <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
+              My Connections
+            </Text>
+          </View>
 
-        <View style={{padding: 0}}>
-          {isLoading && (
-            <ActivityIndicator
-              size="large"
-              style={{paddingVertical: 100, paddingHorizontal: 100}}
-            />
-          )}
-          {!isLoading &&
-            getMembers.map(item => (
-              <ScrollView>
-                <View style={styles.listCoontainer} key={item.id}>
-                  <TouchableOpacity
-                    style={styles.listTitle}
-                    onPress={() => {
-                      navigate('ViewMember', {item});
-                    }}>
-                    <Image
-                      source={{uri: item?.avatar_urls?.full || IMAGEDEFAULT}}
-                      style={styles.profileImg}
-                    />
-                    <View style={{marginHorizontal: 10}}>
-                      <Text
-                        style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
-                        {item.name}
-                      </Text>
-                      <Text
-                        style={{
-                          color: '#333',
-                          fontSize: 10,
-                          fontFamily: 'Poppins-Regular',
-                        }}>
-                        {item.link}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.iconWrapper}
-                    onPress={() => {
-                      // navigate(ViewMemberInfo, {item});
-                      getSingleMember(item.id);
-                      handleSheetChanges(0);
-                    }}>
-                    <Icon
-                      type="Feather"
-                      name="more-horizontal"
-                      color="#fff"
-                      size={15}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </ScrollView>
-            ))}
+          <View style={{padding: 0}}>
+            {isLoading && (
+              <ActivityIndicator
+                size="large"
+                style={{paddingVertical: 100, paddingHorizontal: 100}}
+              />
+            )}
+            {!isLoading &&
+              getMembers.map(item => (
+                <ScrollView>
+                  <View style={styles.listCoontainer} key={item.id}>
+                    <TouchableOpacity
+                      style={styles.listTitle}
+                      onPress={() => {
+                        navigate('ViewMember', {item});
+                      }}>
+                      <Image
+                        source={{uri: item?.avatar_urls?.full || IMAGEDEFAULT}}
+                        style={styles.profileImg}
+                      />
+                      <View style={{marginHorizontal: 10}}>
+                        <Text
+                          style={{
+                            color: '#333',
+                            fontFamily: 'Poppins-Regular',
+                          }}>
+                          {item.name}
+                        </Text>
+                        <Text
+                          style={{
+                            color: '#333',
+                            fontSize: 10,
+                            fontFamily: 'Poppins-Regular',
+                          }}>
+                          {item.link}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.iconWrapper}
+                      onPress={() => {
+                        // navigate(ViewMemberInfo, {item});
+                        getSingleMember(item.id);
+                        handleSheetChanges(0);
+                      }}>
+                      <Icon
+                        type="Feather"
+                        name="more-horizontal"
+                        color="#fff"
+                        size={15}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </ScrollView>
+              ))}
+          </View>
         </View>
-      </View>
+      </ScrollView>
       {isOpen && (
         <BottomSheet
           ref={bottomSheetRef}
           snapPoints={snapPoints}
           enablePanDownToClose={true}
-          onClose={() => setIsOpen(false)}>
+          // enableTouchOutsideToClose={false}
+          onClose={() => setIsOpen(!isOpen)}>
           <BottomSheetView>
             {/* <ViewMemberInfo /> */}
             <MemberBottomSheet />

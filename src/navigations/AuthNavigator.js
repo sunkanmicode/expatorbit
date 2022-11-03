@@ -31,7 +31,7 @@ const AuthNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{header: () => null}}>
       <AuthStack.Screen name={ONBOARDING} component={Onboarding} />
-      <AuthStack.Screen name={REQUESTINVITE} component={RequestInvite} />
+      <AuthStack.Screen name="REQUESTINVITE" component={RequestInvite} />
       <AuthStack.Screen name={LOGIN} component={Login} />
       <AuthStack.Screen name={REGISTER} component={RegisterStack} />
       <AuthStack.Screen name={FORGOTPASSWORD} component={ForgetPassword} />
