@@ -24,15 +24,15 @@ import ImagePickerCrop from '../bottomSheetContainer/ImagePicker';
 const IMAGEDEFAULT =
   'https://www.citypng.com/public/uploads/small/31634946729ohd4odcijurvd40v45hl8lft4w1qmw8bx6fpldgscjmqvhptmmk00uh8j1ol5e20u2vd13ewb2ojyzg60xau3z3mkymxo7ydaql1.png';
 
-const ProfileEditComp = () => {
+const ProfileEditComp = ({getProfile,onChange, form, navigation}) => {
+  const {navigate} = useNavigation();
+
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const [date, setDate] = useState(new Date());
   const [localFile, setLocalFile] = useState(null);
 
   const [formStep, setFormStep] = useState(0);
   //   console.log(options, 'options')
-  const {navigate} = useNavigation();
-
 
   const [isOpen, setIsOpen] = useState(false);
   // ref
@@ -48,14 +48,13 @@ const ProfileEditComp = () => {
     // console.log("handleSheetChanges", index);
   }, []);
 
-const onFileSelected = (image)=>{
+  const onFileSelected = image => {
     setIsOpen(false);
     setLocalFile(image);
-    console.log(image, 'img')
-}
+    console.log(image, 'img');
+  };
 
-console.log(localFile, '11111')
-
+  console.log(localFile, '11111');
 
   const options = [
     {label: 'JavaScript', value: 'JavaScript'},
@@ -71,7 +70,7 @@ console.log(localFile, '11111')
   };
   const completePrevForm = () => {
     if (formStep === 0) {
-      return null;
+      return navigation.goBack();
     }
     setFormStep(cur => cur - 1);
   };
@@ -104,7 +103,10 @@ console.log(localFile, '11111')
                 <Image
                   resizeMode="stretch"
                   source={{
-                    uri: localFile?.path || IMAGEDEFAULT,
+                    uri:
+                      getProfile?.avatar_urls?.full ||
+                      localFile ||
+                      localFile?.path,
                   }}
                   style={styles.logoImage}
                 />
@@ -126,9 +128,11 @@ console.log(localFile, '11111')
               <Input
                 label="Full Name"
                 placeholder="Enter Full Name"
+                style={{color: '#333'}}
+                value={getProfile?.name}
                 //! coming to meet
                 onChangeText={value => {
-                  onChangeForm({name: 'fullname', value: value});
+                  onChange({name: 'name', value: value});
                 }}
                 // icon={<Text>HIDE</Text>}
                 iconPositon="left"
@@ -137,9 +141,11 @@ console.log(localFile, '11111')
               <Input
                 label="Username"
                 placeholder="User Name"
+                style={{color: '#333'}}
+                value={getProfile.user_login}
                 //! coming to meet
                 onChangeText={value => {
-                  onChangeForm({name: 'username', value: value});
+                  onChange({name: 'user_login', value: value});
                 }}
                 // value={value}
                 // icon={<Text>HIDE</Text>}
@@ -148,9 +154,11 @@ console.log(localFile, '11111')
               <Input
                 label="Home Country"
                 placeholder="Enter Your Country"
+                style={{color: '#333'}}
+                value={getProfile?.xprofile?.groups[1]?.fields[36]?.value?.raw}
                 //! coming to meet
                 onChangeText={value => {
-                  onChangeForm({name: 'country', value: value});
+                  onChange({name: 'country', value: value});
                 }}
                 // value={value}
                 // icon={<Text>HIDE</Text>}
@@ -159,9 +167,11 @@ console.log(localFile, '11111')
               <Input
                 label="Host Country "
                 placeholder="Host Country"
+                style={{color: '#333'}}
+                value={getProfile?.xprofile?.groups[6]?.fields[86]?.value?.raw}
                 //! coming to meet
                 onChangeText={value => {
-                  onChangeForm({name: 'email', value: value});
+                  onChange({name: 'HostCountry', value: value});
                 }}
                 // icon={<Text>HIDE</Text>}
                 iconPositon="left"
@@ -173,9 +183,11 @@ console.log(localFile, '11111')
               <Input
                 label="Place of Stay "
                 placeholder="Place of Stay"
+                style={{color: '#333'}}
+                value={getProfile?.xprofile?.groups[6]?.fields[86]?.value?.raw}
                 //! coming to meet
                 onChangeText={value => {
-                  onChangeForm({name: 'email', value: value});
+                  onChange({name: 'placeOfStay', value: value});
                 }}
                 // icon={<Text>HIDE</Text>}
                 iconPositon="left"
@@ -186,6 +198,12 @@ console.log(localFile, '11111')
                   datePickerOpen={datePickerOpen}
                   setDatePickerOpen={setDatePickerOpen}
                   date={date}
+                  // value={moment(
+                  //   getProfile?.xprofile?.groups[6]?.fields[85]?.value?.raw,
+                  // ).format('MMMM Do YYYY')}
+                  value={
+                    getProfile?.xprofile?.groups[6]?.fields[85]?.value?.raw
+                  }
                   label="Birthday"
                   icon={
                     <Icon
@@ -200,10 +218,12 @@ console.log(localFile, '11111')
               </View>
               <Input
                 label="Gender "
-                placeholder="Host Country"
+                placeholder="Gender"
+                style={{color: '#333'}}
+                value={getProfile?.xprofile?.groups[6]?.fields[88]?.value?.raw}
                 //! coming to meet
                 onChangeText={value => {
-                  onChangeForm({name: 'email', value: value});
+                  onChange({name: 'gender', value: value});
                 }}
                 // icon={<Text>HIDE</Text>}
                 iconPositon="left"
@@ -217,6 +237,7 @@ console.log(localFile, '11111')
                 setDatePickerOpen={setDatePickerOpen}
                 date={date}
                 label="Start Date of my expat journey"
+                value={getProfile?.xprofile?.groups[3]?.fields[46]?.value?.raw}
                 icon={
                   <Icon
                     type="FontAwesome"
@@ -232,6 +253,7 @@ console.log(localFile, '11111')
                 setDatePickerOpen={setDatePickerOpen}
                 date={date}
                 label="Expected end date of your stay"
+                value={getProfile?.xprofile?.groups[3]?.fields[47]?.value?.raw}
                 icon={
                   <Icon
                     type="FontAwesome"
@@ -245,6 +267,10 @@ console.log(localFile, '11111')
 
               <CustomSelectOption
                 label="What brought me to my host country"
+                selectedValue={
+                  getProfile?.xprofile?.groups[3]?.fields[51]?.value?.raw
+                }
+                value={getProfile?.xprofile?.groups[3]?.fields[51]?.value?.raw}
                 options={options}
               />
 

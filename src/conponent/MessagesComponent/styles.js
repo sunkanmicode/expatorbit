@@ -3,9 +3,33 @@ import colors from '../../assets/themes/colors';
 
 export default StyleSheet.create({
   logoImage: {
-    height: 200,
-    width: '100%',
+    height: 100,
+    width: 100,
+    borderRadius: 100,
   },
+  messageTitle: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  messageText: {
+    width: 200,
+  },
+  textTitle1: {
+    fontSize: 18,
+    color: colors.expat,
+    fontFamily: 'Poppins-Regular',
+  },
+  textTitle2: {
+    color: colors.grey,
+    fontSize: 10,
+    fontFamily: 'Poppins-Regular',
+  },
+  // popupWrapper:{
+  //   width: 250,
+  //   backgroundColor:"blue",
+  // },
+
   wrapper: {
     flex: 1,
     backgroundColor: colors.white,

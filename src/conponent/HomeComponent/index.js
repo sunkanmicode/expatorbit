@@ -40,8 +40,11 @@ const data2 = [
   },
 ];
 
-const HomeComponent = () => {
+const HomeComponent = ({getUser_Id}) => {
   const [currentSlidesIndex, setCurrentSlidesIndex] = React.useState(0);
+  console.log(getUser_Id?.member_rest, 'getUser_Id');
+  // console.log(getUser_Id, 'getUser_Id66666666');
+
 
   const Footer = () => {
     return (
@@ -99,7 +102,7 @@ const HomeComponent = () => {
     <ScrollView style={{padding: 20}}>
       <View style={styles.header}>
         <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
-          Welcome Henna!
+          {`Welcome ${getUser_Id?.member_rest?.fullname}!`}
         </Text>
         <View style={styles.headerIcons}>
           <TouchableOpacity style={{margin: 20}}>
@@ -250,8 +253,8 @@ const HomeComponent = () => {
             <View key={d.index} style={styles.card}>
               <View>
                 <Image
-                  // source={{uri: d.img2}}
-                  source={require('../../assets/images/img1.png')}
+                  source={ d.img2}
+                  // source={require('../../assets/images/img1.png')}
                   // style={{flex: 1,}}
                   style={styles.card2}
                 />
@@ -292,8 +295,8 @@ const HomeComponent = () => {
             <View key={d.index} style={styles.card}>
               <View>
                 <Image
-                  // source={{uri: d.img2}}
-                  source={require('../../assets/images/img2.png')}
+                  source={ d.img2}
+                  // source={require('../../assets/images/img2.png')}
                   // style={{flex: 1,}}
                   style={styles.card2}
                 />

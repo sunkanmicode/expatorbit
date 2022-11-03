@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import {
   Menu,
@@ -23,6 +24,7 @@ import Container from '../../conponent/Container';
 import Icon from '../../conponent/CustomIcon/index'
 import styles from './styles';
 import Chat from '../../screens/Chat';
+import colors from '../../assets/themes/colors';
 
 const MessagesComponent = ({isLoading, getMessages}) => {
   const {navigate} = useNavigation();
@@ -69,67 +71,84 @@ const MessagesComponent = ({isLoading, getMessages}) => {
           />
           <Text style={{color: '#333', fontSize: 20}}>Members</Text>
         </View>
-        <Icon type="MaterialIcons" size={20} name="search" color="#333" />
       </View>
 
       <Container style={{paddingHorizontal: 1}}>
-        {/* <View style={{paddingVertical: 100, paddingHorizontal: 100}}> */}
-        {isLoading && <ActivityIndicator size="large" />}
-        {/* </View> */}
-        {!isLoading &&
-          getMessages.map(m =>
-            m.messages.map(k => (
-              <>
-                <Menu>
-                  <TouchableOpacity
-                    key={k.id}
-                    style={styles.messContainer}
-                    onPress={() => {
-                      navigate(Chat);
-                    }}
-                    onLongPress={() => {}}>
-                    <View style={styles.groupsGridBox}>
-                      <Image
-                        resizeMode="stretch"
-                        // source={require('../../assets/images/group.png')}
-                        source={{uri: k?.sender_data?.user_avatars?.thumb}}
-                        style={styles.logoImage2}
-                      />
-                      <View style={{paddingLeft: 10}}>
-                        <View style={styles.subGroupView}>
-                          <Text style={styles.subGroupTextTile}>
-                            {k?.sender_data?.sender_name}
-                          </Text>
-                          {/* <Text style={{color: '#333'}}>{k?.display_date}</Text> */}
-                        </View>
-                        <Text style={styles.subGroupText}>
-                          {k?.message?.raw}
-                        </Text>
-                      </View>
-                    </View>
-                    <Text style={{color: '#333'}}>
-                      {k?.display_date}
-                      <Icon name="right" type="AntDesign" color="#333" />
-                    </Text>
-                    {/* <Icon name="right" type="AntDesign" color="#333" /> */}
-                  </TouchableOpacity>
-                  <MenuTrigger text="Select action" />
-                  <MenuOptions>
-                    <MenuOption onSelect={() => alert(`Save`)} text="Save" />
-                    <MenuOption onSelect={() => alert(`Delete`)}>
-                      <Text style={{color: 'red'}}>Delete</Text>
-                    </MenuOption>
-                    <MenuOption
-                      onSelect={() => alert(`Not called`)}
-                      disabled={true}
-                      text="Disabled"
-                    />
-                  </MenuOptions>
-                </Menu>
-                <Text style={{color: '#333'}}>Hello world</Text>
-              </>
-            )),
-          )}
+        <Menu>
+          {/* <MenuTrigger
+            triggerOnLongPress={true}
+            customStyles={{
+              TriggerTouchableComponent: TouchableOpacity,
+            }}
+            onLongPress={() => {
+              console.log('click');
+            }}>
+            <View>
+              <Text style={{color: '#333'}}>open text</Text>
+              <Text style={{color: '#333'}}>open text</Text>
+              <Text style={{color: '#333'}}>open text</Text>
+            </View>
+          </MenuTrigger> */}
+
+          {/* <MenuOptions>
+            <MenuOption onSelect={() => alert(`Delete`)}>
+              <Text style={{color: 'red'}}>Delete</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => alert(`save`)}>
+              <Text style={{color: 'red'}}>Save</Text>
+            </MenuOption>
+            <MenuOption onSelect={() => alert(`Move`)}>
+              <Text style={{color: 'red'}}>Move</Text>
+            </MenuOption>
+          </MenuOptions> */}
+          <MenuTrigger
+            triggerOnLongPress={true}
+            // onAlternativeAction={true}
+            customStyles={{
+              TriggerTouchableComponent: TouchableOpacity,
+            }}
+            onLongPress={() => {
+              console.log('click');
+            }}>
+            <View style={styles.messageTitle}>
+              <View>
+                <Image
+                  source={require('../../assets/images/inviteLogo.png')}
+                  style={styles.logoImage}
+                />
+              </View>
+              <View style={styles.messageText}>
+                <Text style={styles.textTitle1}>Fun with Hindi</Text>
+                <Text style={styles.textTitle2}>
+                  Hanna expat orbit is added to group
+                </Text>
+              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.grey, marginHorizontal: 5}}>
+                  19/10/22
+                </Text>
+                <Icon
+                  name="right"
+                  type="AntDesign"
+                  size={15}
+                  color={colors.grey}
+                />
+              </View>
+            </View>
+          </MenuTrigger>
+            <MenuOptions style={styles.popupWrapper}>
+              <MenuOption onSelect={() => alert(`Delete`)}>
+                <Text style={{color: '#333'}}>Report</Text>
+              </MenuOption>
+              <MenuOption onSelect={() => alert(`save`)}>
+                <Text style={{color: '#333'}}>Block</Text>
+              </MenuOption>
+              <MenuOption onSelect={() => alert(`Move`)}>
+                <Text style={{color: 'red'}}>Delete conversion</Text>
+              </MenuOption>
+            </MenuOptions>
+          
+        </Menu>
       </Container>
     </ScrollView>
   );

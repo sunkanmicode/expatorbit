@@ -20,14 +20,30 @@ import colors from '../../assets/themes/colors';
 import ViewProfileList from '../bottomSheetContainer/ViewProfileList';
 import CustomModel from '../CustomModel';
 import moment from 'moment';
+import CustomBottomSheet from '../bottomSheetContainer/CustomBottomSheet';
 // import {useRoute} from '@react-navigation/native';
 
-const ViewMemberComponent = ({viewMember, navigation}) => {
+const ViewMemberComponent = ({
+  viewMember,
+  navigation,
+  sheetRef,
+  openSheet,
+  closeSheet,
+  modelVisible,
+  setModelVisible,
+  modelVisible2,
+  setModelVisible2,
+  modelVisible3,
+  setModelVisible3,
+  openRemoveConnection,
+  show2,
+  setShow2,
+}) => {
   const {navigate} = useNavigation();
   const [categoriesIndex, setCategoriesIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [modelVisible, setModelVisible] = useState(false);
-  const [modelVisible2, setModelVisible2] = useState(false);
+  const [showAboutMe, setShowAboutMe] = useState(false);
+ 
   // console.log(viewMember, 'ViewMember');
 
   // ref
@@ -45,14 +61,16 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
 
   const categories = [
     {name: 'Connect', onPress: () => {}},
-    {name: 'Follow', onPress: () => {}},
+    // {name: 'Follow', onPress: () => {}},
     {name: 'Message', onPress: () => {}},
     {
       name: (
         <Icon type="Feather" name="more-horizontal" color="#333" size={15} />
       ),
       onPress: () => {
-        handleSheetChanges(0);
+        // handleSheetChanges(0);
+        openSheet();
+        setShow2(false)
       },
     },
   ];
@@ -124,33 +142,21 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
   return (
     <>
       <CustomModel
-        modelVisible={modelVisible}
-        setModelVisible={setModelVisible}
-        // modelBody={
-        //   <View>
-        //     <Text>
-        //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-        //     </Text>
-        //   </View>
-        // }
-        // modelFooter={<></>}
+        modelVisible={modelVisible2}
+        setModelVisible={setModelVisible2}
         title="Connection removed"
+        textFooter="Ok"
         // title2='Has been update'
       />
+
       <CustomModel
-        modelVisible={modelVisible}
-        setModelVisible={setModelVisible}
-        // modelBody={
-        //   <View>
-        //     <Text>
-        //       Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-        //     </Text>
-        //   </View>
-        // }
-        // modelFooter={<></>}
+        modelVisible={modelVisible3}
+        setModelVisible={setModelVisible3}
         title="Member blocked"
         title2="Go to settings to unblock"
+        textFooter="Ok"
       />
+
       <ScrollView
         style={[
           styles.container,
@@ -158,9 +164,10 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
         ]}>
         <View style={styles.profileContainer}>
           <View style={styles.profileHeader}>
-            <TouchableOpacity onPress={()=>{
-              navigate.goBack()
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigate.goBack();
+              }}>
               <Icon
                 type="MaterialIcons"
                 // style={styles.playIcon}
@@ -239,7 +246,8 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
               Lives in
             </Text>
             <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
-              Norib, India
+              {/* Norib, India */}
+              {viewMember?.xprofile?.groups[1]?.fields[36]?.value?.raw}
             </Text>
           </View>
           <View style={styles.personalInfo}>
@@ -295,68 +303,132 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
                 : null}
             </Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setShowAboutMe(!showAboutMe);
+            }}>
             <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
               ...see your about me
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
-          <Text style={styles.timelineText}>Timeline</Text>
-          <TouchableOpacity>
-            <Icon
-              type="MaterialIcons"
-              name="keyboard-arrow-right"
-              size={30}
-              color="#333"
-            />
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          horizontal
-          keyExtractor={(item, index) => String(index)}
-          data={timeline}
-          renderItem={({item}) => (
-            <TouchableOpacity style={styles.timelineBox}>
-              <View style={styles.timeline2}>
-                <Image source={{uri: item.uri}} style={styles.profileImg2} />
-                <View style={{marginHorizontal: 10}}>
+        {showAboutMe && (
+          <>
+            <View style={styles.footerSeparator} />
+
+            <View style={styles.expatJourney}>
+              <Text style={styles.timelineText}>My Expat journey</Text>
+              <View style={styles.expatLocation}>
+                <View style={{alignItems: 'center'}}>
+                  <Icon
+                    type="Entypo"
+                    name="location-pin"
+                    size={20}
+                    color="red"
+                  />
                   <Text
                     style={{
-                      color: colors.expat,
-                      fontFamily: 'Poppins-Regular',
-                    }}>
-                    {item.title}
-                  </Text>
-                  <Text
-                    style={{
-                      color: '#333',
+                      color: 'grey',
+                      width: 70,
+                      textAlign: 'center',
                       fontSize: 10,
                       fontFamily: 'Poppins-Regular',
                     }}>
-                    {item.subTitle},
+                    {!viewMember?.xprofile?.groups[3]?.fields
+                      ? null
+                      : moment(
+                          viewMember?.xprofile?.groups[3]?.fields[46]?.value
+                            ?.raw,
+                        ).format('MMMM Do YYYY')}
+                  </Text>
+                </View>
+
+                <View>
+                  <Image
+                    resizeMode="stretch"
+                    source={require('../../assets/images/line.png')}
+                    style={styles.expatImgLine}
+                  />
+                </View>
+
+                <View style={{alignItems: 'center'}}>
+                  <Icon
+                    type="Entypo"
+                    name="location-pin"
+                    size={20}
+                    color="red"
+                  />
+                  <Text
+                    style={{
+                      color: 'grey',
+                      width: 70,
+                      textAlign: 'center',
+                      fontSize: 9,
+                      fontFamily: 'Poppins-Regular',
+                    }}>
+                    {!viewMember?.xprofile?.groups[3]?.fields
+                      ? null
+                      : moment(
+                          viewMember?.xprofile?.groups[3]?.fields[47]?.value
+                            ?.raw,
+                        ).format('MMMM Do YYYY')}
                   </Text>
                 </View>
               </View>
-              <View style={{marginHorizontal: 20}}>
+              <View style={styles.expatJourneyInfo}>
                 <Text
                   style={{
                     color: '#333',
-                    fontSize: 13,
+                    color: colors.grey,
                     fontFamily: 'Poppins-Regular',
                   }}>
-                  {item.desc}
+                  My reason for this relocation
                 </Text>
+                <Text
+                  style={{
+                    color: '#333',
+                    fontSize: 15,
+                    fontFamily: 'Poppins-Regular',
+                  }}>
+                  {!viewMember?.xprofile?.groups[3]?.fields
+                    ? null
+                    : viewMember?.xprofile?.groups[3]?.fields[51]?.value?.raw}
+                </Text>
+                <View style={styles.footerSeparator} />
+
+                <View>
+                  <Text
+                    style={{
+                      color: colors.grey,
+                      fontFamily: 'Poppins-Regular',
+                    }}>
+                    Interests
+                  </Text>
+                  {!viewMember?.xprofile?.groups[4]?.fields
+                    ? null
+                    : viewMember?.xprofile?.groups[4]?.fields[67]?.value?.unserialized.map(
+                        int => (
+                          // <View style={styles.interest}>
+                          <View style={{flexDirection: 'row'}}>
+                            <Text
+                              style={{
+                                color: '#333',
+                                fontFamily: 'Poppins-Regular',
+                              }}>
+                              {int}
+                            </Text>
+                          </View>
+                        ),
+                      )}
+                </View>
               </View>
-            </TouchableOpacity>
-          )}
-        />
+            </View>
+          </>
+        )}
         <View style={styles.footerSeparator} />
-        <View style={styles.timeline}>
+        <TouchableOpacity style={styles.timeline}>
           <Text style={styles.timelineText}>Connections</Text>
-          <TouchableOpacity
-            style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={{color: colors.expat}}>12</Text>
             <Icon
               type="MaterialIcons"
@@ -364,8 +436,8 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
               size={30}
               color="#333"
             />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
         <View style={styles.footerSeparator} />
         <View style={styles.timeline}>
           <Text style={styles.timelineText}>Groups</Text>
@@ -478,7 +550,17 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
           )}
         />
       </ScrollView>
-      {isOpen && (
+      <CustomBottomSheet
+        ref={sheetRef}
+        setModelVisible={setModelVisible}
+        setModelVisible2={setModelVisible2}
+        setModelVisible3={setModelVisible3}
+        // openRemoveConnection={openRemoveConnection}
+        show2={show2} 
+        setShow2={setShow2}
+      />
+      {/* <CustomBottomSheet /> */}
+      {/* {isOpen && (
         <BottomSheet
           ref={bottomSheetRef}
           snapPoints={snapPoints}
@@ -488,7 +570,7 @@ const ViewMemberComponent = ({viewMember, navigation}) => {
             <ViewProfileList setModelVisible={setModelVisible} />
           </BottomSheetView>
         </BottomSheet>
-      )}
+      )} */}
     </>
   );
 };

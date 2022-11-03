@@ -9,7 +9,7 @@ import { color } from 'react-native-reanimated';
 
 const CustomDatePicker = ({
   style,
-//   onChangeText,
+  onChange,
   label,
   icon,
 //   value,
@@ -18,6 +18,7 @@ const CustomDatePicker = ({
   datePickerOpen,
   setDatePickerOpen,
   date,
+  value,
   ...props
 }) => {
   const [focused, setFocused] = useState(false);
@@ -59,17 +60,17 @@ const CustomDatePicker = ({
             },
           ]}>
           <Text style={{color: '#333', margin: 10}}>
-            {moment(date).format('MMM Do YYYY')}
+            {moment(value).format('MMM Do YYYY')}
           </Text>
           <View>{icon && icon}</View>
 
           {datePickerOpen && (
             <DateTimePicker
               testID="dateTimePicker"
-              value={date}
+              value={value}
               //   mode={mode}
               //   is24Hour={true}
-              // onChange={onChange}
+              onChange={onChange}
 
               {...props}
             />

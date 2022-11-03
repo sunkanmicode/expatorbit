@@ -5925,6 +5925,11 @@ react-native-popup-menu@^0.15.13:
   resolved "https://registry.npmjs.org/react-native-popup-menu/-/react-native-popup-menu-0.15.13.tgz"
   integrity sha512-L9j6UNbEqftxB2NR229UD7xYfS7E4EqMOa4k2wjBLk14DuG3Ttp21vcddWD183pTbaych8y1LB7TfreypN9mvQ==
 
+react-native-raw-bottom-sheet@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-raw-bottom-sheet/-/react-native-raw-bottom-sheet-2.2.0.tgz#d11dabb86aadb014273767ef7b554924b13633c5"
+  integrity sha512-qL4JKIqvbcVxbkKzeh51hjV7suoJN3ouxzvLmOg0FBUV1yiJAfEbacjQdtRCI6+OU5pyGFBIifLsTXcFDwHggg==
+
 react-native-reanimated@^2.8.0:
   version "2.8.0"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.8.0.tgz"

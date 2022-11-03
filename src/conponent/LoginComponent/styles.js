@@ -2,21 +2,20 @@ import {StyleSheet} from 'react-native';
 import colors from '../../assets/themes/colors';
 
 export default StyleSheet.create({
- 
   logoImage: {
-    height: 70,
-    width: 70,
+    height: 200,
+    width: "100%",
     alignSelf: 'center',
-    marginTop: 50,
+    // marginTop: 20,
     // borderColor: colors.gray,
   },
   title: {
-    fontSize: 50,
+    fontSize: 30,
     textAlign: 'center',
     paddingTop: 20,
     fontWeight: '700',
     color: '#231f20',
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
     // color:colors.grey
     // opacity: 0.5,
   },
@@ -25,6 +24,7 @@ export default StyleSheet.create({
     padding: 20,
     borderRadius: 40,
     borderColor: colors.primary,
+    margin: 30,
     // opacity: 0.5,
   },
   form: {

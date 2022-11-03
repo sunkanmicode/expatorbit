@@ -8,11 +8,11 @@ const Messages = ({navigation}) => {
   const {
     expatsDispatch,
     expatsState: {
-      getMessages: {data, loading},
+      getMessages: {data, loading, error},
     },
   } = useContext(GlobalContext);
 
-  //  console.log({data, loading}, 'message500');
+   console.log(data, loading, error, 'message500');
 
   useEffect(() => {
     getAllMessages()(expatsDispatch);

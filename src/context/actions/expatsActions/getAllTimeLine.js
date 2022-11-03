@@ -12,9 +12,7 @@ export default (id) => dispatch => {
   dispatch({
     type: GET_TIMELINE_LOADING,
   });
-  axiosInstance(
-    `${ROOT_URL}/wp-json/buddyboss/v1/activity`,
-  )
+  axiosInstance(`${ROOT_URL}/wp-json/buddyboss/v1/activity?per_page=20`)
     .then(res => {
       dispatch({
         type: GET_TIMELINE_SUCCESS,

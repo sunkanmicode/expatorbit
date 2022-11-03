@@ -1,7 +1,9 @@
 import React from 'react'
 import { ActivityIndicator, Dimensions, FlatList, Image, ImageBackground, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import colors from '../../assets/themes/colors';
-import VideoPlayer from 'react-native-video-controls';
+// import VideoPlayer from 'react-native-video-controls';
+import VideoPlayer from 'react-native-video-player';
+
 import Icon from '../CustomIcon'
 import styles from './styles';
 
@@ -96,9 +98,10 @@ const MediaComponent = ({
       <View style={{backgroundColor: '#fff', padding: 20}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={()=>{
-              navigation.goBack();
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.goBack();
+              }}>
               <Icon
                 type="MaterialIcons"
                 name="arrow-back-ios"
@@ -133,16 +136,16 @@ const MediaComponent = ({
       {/*//! {Photos} */}
       {categoriesIndex === 0 && (
         <View>
-          <FlatList
-            //   horizontal
-            numColumns={3}
-            keyExtractor={(item, index) => String(index)}
-            data={photoData}
-            renderItem={({item}) => (
-              <>
-                {photoLoading ? (
-                  <ActivityIndicator style={styles.mediaBox} />
-                ) : (
+          {photoLoading ? (
+            <ActivityIndicator style={styles.mediaBox} />
+          ) : (
+            <FlatList
+              //   horizontal
+              numColumns={3}
+              keyExtractor={(item, index) => String(index)}
+              data={photoData}
+              renderItem={({item}) => (
+                <>
                   <TouchableOpacity>
                     <View>
                       <Image
@@ -153,19 +156,55 @@ const MediaComponent = ({
                         // style={{width: 200, height: '100%'}}
                         style={styles.mediaBox}
                       />
+                      <Text style={{color: '#333'}}>Hello</Text>
                     </View>
                   </TouchableOpacity>
-                )}
-              </>
-            )}
-          />
+                </>
+              )}
+            />
+          )}
         </View>
       )}
       {/*//! {end of Photos} */}
       {/*//! {Video} */}
       {categoriesIndex === 1 && (
-        <ScrollView style={{}}>
-          {videoData?.map(v => (
+        <View style={{}}>
+          {videoLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <>
+              {videoError ? (
+                <Text style={{color: '#333'}}>Some Thing went wrong</Text>
+              ) : (
+                <>
+                  {!videoData ? (
+                    <Text style={{color: '#333'}}>No data</Text>
+                  ) : (
+                    <FlatList
+                      data={videoData}
+                      numColumns={3}
+                      keyExtractor={item => item.id.toString()}
+                      renderItem={({item}) => (
+                        <VideoPlayer
+                          video={{uri: item.url}}
+                          autoplay={false}
+                          defaultMuted={true}
+                          videoWidth={3000}
+                          videoHeight={500}
+                          // style={{width: 200, height: 200, margin: 10}}
+                          style={styles.mediaBox}
+                          thumbnail={{
+                            url: item.attachment_data.activity_thumb,
+                          }}
+                        />
+                      )}
+                    />
+                  )}
+                </>
+              )}
+            </>
+          )}
+          {/* {videoData?.map(v => (
             <TouchableOpacity style={styles.mediaBox2} key={v.id}>
               <VideoPlayer
                 resizeMode="stretch"
@@ -181,8 +220,8 @@ const MediaComponent = ({
                 // style={styles.mediaBox}
               />
             </TouchableOpacity>
-          ))}
-        </ScrollView>
+          ))} */}
+        </View>
       )}
 
       {/*//! {end of video} */}

@@ -26,7 +26,7 @@ export default (id) => dispatch => {
         type: GET_PROFILE_FAIL,
         payload: err.response
           ? err.response.data
-          : {error: 'something went wrong'},
+          : {err: 'something went wrong'},
       });
     });
 };

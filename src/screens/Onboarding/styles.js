@@ -9,20 +9,15 @@ export default StyleSheet.create({
   inputView: {
     height: 50,
     width: 350,
-    // backgroundColor: '#F9FAFB',
     borderRadius: 10,
     borderWidth: 0.5,
-    // borderColor: colors.grey,
     alignSelf: 'center',
-    // flex: 1,
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
-    // paddingHorizontal: 20,
+    
   },
   input: {
     color: '#333',
-    textAlign: 'center',
+    marginLeft: 20,
+    flex: 1,
   },
   indicator: {
     height: 10,

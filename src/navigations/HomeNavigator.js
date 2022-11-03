@@ -45,8 +45,8 @@ const HomeNavigator = () => {
             color = focused ? colors.primary : colors.grey;
             size = focused ? 20 : 18;
           } else if (route.name === 'MESSAGESSTACK') {
-            iconName = 'message';
-            type = 'Entypo';
+            iconName = 'envelope';
+            type = 'FontAwesome';
             size = focused ? 20 : 18;
             color = focused ? colors.primary : colors.grey;
           } else if (route.name === 'ACCOUNTSTACK') {
@@ -58,10 +58,10 @@ const HomeNavigator = () => {
           return <Icon type={type} name={iconName} size={size} color={color} />;
         },
       })}>
-      <Tab.Screen name={HOMESTACKSCREEN} component={HomeStackScreen} />
+      <Tab.Screen name="HOMESTACKSCREEN" component={HomeStackScreen} />
       <Tab.Screen name={TIMELINESTACK} component={TimelineStack} />
-      <Tab.Screen name={MESSAGESSTACK} component={MessageStack} />
-      <Tab.Screen name={ACCOUNTSTACK} component={AccountStack} />
+      <Tab.Screen name="MESSAGESSTACK" component={MessageStack} />
+      <Tab.Screen name="ACCOUNTSTACK" component={AccountStack} />
 
       {/* 
       <Tab.Screen name={PROFILE} component={ProfileStack} />

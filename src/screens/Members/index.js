@@ -8,27 +8,39 @@ import memberInfoData from '../../context/actions/expatsActions/memberInfoData';
 
 const Members = () => {
   const [filteMember, setFilterMember] = useState([])
+
+  
   const {params} = useRoute()
   // console.log(params, 'params');
   const {
     expatsDispatch,
     expatsState: {
+      getUser_Id,
       getMembers: {data, loading},
     },
   } = useContext(GlobalContext);
 
   //  console.log({data, loading}, 'member500');
-    const byPersonal = data?.filter(r => r.friendship_status !== 'is_friend');
+    // const byPersonal = data?.filter(r => r.friendship_status !== 'is_friend');
+  const newMemberFilter = data?.filter(r => r.id != getUser_Id.id);
+  const myConnections = newMemberFilter?.filter(r => r.friendship_status == 'is_friend');
+
     // console.log(byPersonal, 'ByPersonal900000');
 
-//get single me,ber
+//get single member
      const getSingleMember = id => {
        memberInfoData(id)(expatsDispatch);
      };
 
     const handFilter =()=>{
-      setFilterMember(byPersonal);
+      // setFilterMember(myConnections);
+      // newMemberFilter?.filter(r => r.friendship_status == 'is_friend');
+
     }
+    // console.log(filteMember,myConnections, 'filtermember')
+
+
+   
 
   useEffect(() => {
     getAllMembers()(expatsDispatch);
@@ -36,11 +48,13 @@ const Members = () => {
 
   return (
     <MembersComponent
-      getMembers={byPersonal}
+      // getMembers={byPersonal}
+      getMembers={newMemberFilter}
       isLoading={loading}
       handFilter={handFilter}
       getSingleMember={getSingleMember}
       // byPersonal={byPersonal}
+      
     />
   );
 }

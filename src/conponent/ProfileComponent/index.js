@@ -79,7 +79,7 @@ const ProfileComponent = ({
               <View style={styles.profileHeader}>
                 <TouchableOpacity
                   onPress={() => {
-                    navigate.goBack();
+                    navigation.goBack();
                   }}>
                   <Icon
                     type="MaterialIcons"
@@ -151,7 +151,7 @@ const ProfileComponent = ({
               <TouchableOpacity
                 style={styles.editBtn}
                 onPress={() => {
-                  navigate(ProfileEdit, {getProfile});
+                  navigate('ProfileEdit', {getProfile});
                 }}>
                 <Text
                   style={{
@@ -176,8 +176,8 @@ const ProfileComponent = ({
                   Lives in
                 </Text>
                 <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
-                  india
-                  {/* {getProfile?.xprofile?.groups[1]?.fields[36]?.value?.raw} */}
+                  {/* india */}
+                  {getProfile?.xprofile?.groups[1]?.fields[36]?.value?.raw}
                 </Text>
               </View>
               <View style={styles.personalInfo}>
@@ -238,7 +238,6 @@ const ProfileComponent = ({
                   setShowAboutMe(!showAboutMe);
                 }}>
                 <Text style={{color: '#333', fontFamily: 'Poppins-Regular'}}>
-                  {' '}
                   ...see your about me
                 </Text>
               </TouchableOpacity>
@@ -259,9 +258,10 @@ const ProfileComponent = ({
                       />
                       <Text
                         style={{
-                          color: '#333',
+                          color: 'grey',
                           width: 70,
                           textAlign: 'center',
+                          fontSize: 10,
                           fontFamily: 'Poppins-Regular',
                         }}>
                         {moment(
@@ -270,46 +270,14 @@ const ProfileComponent = ({
                         ).format('MMMM Do YYYY')}
                       </Text>
                     </View>
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: 20,
-                        backgroundColor: '#333',
-                        margin: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: 20,
-                        backgroundColor: '#333',
-                        margin: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: 20,
-                        backgroundColor: '#333',
-                        margin: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: 20,
-                        backgroundColor: '#333',
-                        margin: 10,
-                      }}
-                    />
-                    <View
-                      style={{
-                        height: 0.5,
-                        width: 20,
-                        backgroundColor: '#333',
-                        margin: 8,
-                      }}
-                    />
+
+                    <View>
+                      <Image
+                        resizeMode="stretch"
+                        source={require('../../assets/images/line.png')}
+                        style={styles.expatImgLine}
+                      />
+                    </View>
 
                     <View style={{alignItems: 'center'}}>
                       <Icon
@@ -320,9 +288,10 @@ const ProfileComponent = ({
                       />
                       <Text
                         style={{
-                          color: '#333',
+                          color: 'grey',
                           width: 70,
                           textAlign: 'center',
+                          fontSize: 9,
                           fontFamily: 'Poppins-Regular',
                         }}>
                         {moment(
@@ -344,12 +313,13 @@ const ProfileComponent = ({
                     <Text
                       style={{
                         color: '#333',
-                        fontSize: 20,
+                        fontSize: 15,
                         fontFamily: 'Poppins-Regular',
                       }}>
                       {getProfile?.xprofile?.groups[3]?.fields[51]?.value?.raw}
                     </Text>
                     <View style={styles.footerSeparator} />
+
                     <View>
                       <Text
                         style={{
@@ -362,26 +332,18 @@ const ProfileComponent = ({
                         ? null
                         : getProfile?.xprofile?.groups[4]?.fields[67]?.value?.unserialized.map(
                             int => (
-                              <View
-                                style={{
-                                  width: "100%",
-                                  flexDirection:'row',
-                                }}>
-                                <View style={styles.interest}>
-                                  <Text
-                                    style={{
-                                      color: '#333',
-                                      fontFamily: 'Poppins-Regular',
-                                    }}>
-                                    {int}
-                                  </Text>
-                                  
-
-                                </View>
+                              <View>
+                                <Text
+                                  style={{
+                                    color: '#333',
+                                    margin: 10,
+                                    fontFamily: 'Poppins-Regular',
+                                  }}>
+                                  {int}
+                                </Text>
                               </View>
                             ),
                           )}
-                      
                     </View>
                   </View>
                 </View>
@@ -403,10 +365,14 @@ const ProfileComponent = ({
               />
             </TouchableOpacity> */}
             <View style={styles.footerSeparator} />
-            <View style={styles.timeline}>
+            <TouchableOpacity
+              style={styles.timeline}
+              onPress={() => {
+                navigate('MemberStack');
+              }}>
               <View>
                 <Text style={styles.timelineText}>Connections</Text>
-                <View
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
@@ -415,33 +381,31 @@ const ProfileComponent = ({
                   <View style={styles.circleBox}></View>
                   <View style={styles.circleBox}></View>
                   <View style={styles.circleBox}></View>
-                </View>
+                </View> */}
               </View>
-              <TouchableOpacity
-                style={{flexDirection: 'row', alignItems: 'center'}}
-                onPress={() => {
-                  navigate('MemberStack');
-                }}>
-                <Text style={{color: colors.expat}}>{connectionTotal}</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={{color: colors.expat, fontSize: 12}}>
+                  {connectionTotal}
+                </Text>
                 <Icon
                   type="MaterialIcons"
                   name="keyboard-arrow-right"
-                  size={30}
-                  color="#333"
+                  size={20}
+                  color="grey"
                 />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
             <View style={styles.footerSeparator} />
             <View style={styles.timeline}>
               <Text style={styles.timelineText}>Groups</Text>
               <TouchableOpacity
                 style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{color: colors.expat}}>06</Text>
+                <Text style={{color: colors.expat, fontSize: 12}}>06</Text>
                 <Icon
                   type="MaterialIcons"
                   name="keyboard-arrow-right"
-                  size={30}
-                  color="#333"
+                  size={20}
+                  color="grey"
                 />
               </TouchableOpacity>
             </View>
@@ -454,8 +418,8 @@ const ProfileComponent = ({
                 <Icon
                   type="MaterialIcons"
                   name="keyboard-arrow-right"
-                  size={30}
-                  color="#333"
+                  size={20}
+                  color="grey"
                 />
               </TouchableOpacity>
             </View>
@@ -467,12 +431,14 @@ const ProfileComponent = ({
               }}>
               <Text style={styles.timelineText}>Media</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={{color: colors.expat}}>{photoData?.length}</Text>
+                <Text style={{color: colors.expat, fontSize: 12}}>
+                  {photoData?.length}
+                </Text>
                 <Icon
                   type="MaterialIcons"
                   name="keyboard-arrow-right"
-                  size={30}
-                  color="#333"
+                  size={20}
+                  color="grey"
                 />
               </View>
             </TouchableOpacity>

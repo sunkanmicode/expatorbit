@@ -26,11 +26,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
    
 
   return (
-    <View>
-      {/* <Image
-        source={require('../../assets/images/logo.png')}
-        style={styles.logoImage}
-      /> */}
+    <View style={{backgroundColor:"#fff", flex: 1,}}>
       <View style={styles.signBox}>
         <Text style={styles.title}>Sign in</Text>
 
@@ -66,7 +62,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
             onChangeText={value => {
               onChangeForm({name: 'username', value});
             }}
-            // icon={<Text>{<Icon name="user" size={15} />}</Text>}
+            // icon={<Text>{<Icon name="user" size={15} color='#333' />}</Text>}
             iconPositon="left"
           />
           {console.log(error, 'error600')}
@@ -105,7 +101,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
             onPress={onSubmit}
             title="Login"
           />
-          <View style={styles.createSection}>
+          {/* <View style={styles.createSection}>
             <Text style={styles.infoText}>Don't have an account?</Text>
             <TouchableOpacity
               onPress={() => {
@@ -113,7 +109,7 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
               }}>
               <Text style={styles.linkBtn}>Sign Up</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
           <View style={styles.createSection}>
             <TouchableOpacity
             //   onPress={() => {
@@ -133,6 +129,10 @@ const LoginComponent = ({form, errors, loading, error, onChangeForm, onSubmit}) 
           </View>
         </View>
       </View>
+      <Image
+        source={require('../../assets/images/loginImg.png')}
+        style={styles.logoImage}
+      />
     </View>
   );
 };

@@ -40,6 +40,10 @@ import {
   COMMENT_ON_A_POST,
   //get comments on post
   GET_COMMENTS_ON_A_POST,
+  GET_ALL_COMMENTS_LOADING,
+  GET_ALL_COMMENTS_SUCCESS,
+  GET_ALL_COMMENTS_ERROR,
+  //get member info
   GET_MEMBER_INFO,
 } from '../../constants/actionTypes';
 
@@ -307,20 +311,49 @@ const expatsReducer = (state, {type, payload}) => {
         ...state,
         commentOnPost: payload,
       };
-      //get comments on post
-    case GET_COMMENTS_ON_A_POST:
+    //get comments on post
+    // case GET_COMMENTS_ON_A_POST:
+    //   return {
+    //     ...state,
+    //     // ...getCommentsOnPost,
+    //     getCommentsOnPost: payload,
+    //   };
+
+    case GET_ALL_COMMENTS_LOADING:
       return {
         ...state,
-        // ...getCommentsOnPost,
-        getCommentsOnPost: payload,
+        getAllTmelineComments: {
+          ...state.getAllTmelineComments,
+          commentLoading: true,
+          commentError: null,
+        },
       };
-      //get member info
-      case GET_MEMBER_INFO:
-        return {
-          ...state,
-          memberInfo: payload,
-        };
+    case GET_ALL_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        getAllTmelineComments: {
+          ...state.getAllTmelineComments,
+          commentLoading: false,
+          commentsData: payload,
+          commentError: null,
+        },
+      };
+    case GET_ALL_COMMENTS_ERROR:
+      return {
+        ...state,
+        getAllTmelineComments: {
+          ...state.getAllTmelineComments,
+          commentLoading: false,
+          commentError: payload,
+        },
+      };
 
+    //get member info
+    case GET_MEMBER_INFO:
+      return {
+        ...state,
+        memberInfo: payload,
+      };
 
     default:
       return state;

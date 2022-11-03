@@ -10,13 +10,14 @@ export default () => dispatch => {
   dispatch({
     type: GET_VIDEOS_LOADING,
   });
-  axiosInstance(`${ROOT_URL}wp-json/buddyboss/v1/video`)
+  axiosInstance
+    .get(`/wp-json/buddyboss/v1/video`)
     .then(res => {
       dispatch({
         type: GET_VIDEOS_SUCCESS,
         payload: res.data,
       });
-      console.log(data, 'VIDEOS');
+      console.log(res.data, 'VIDEOS');
     })
     .catch(err => {
       dispatch({
